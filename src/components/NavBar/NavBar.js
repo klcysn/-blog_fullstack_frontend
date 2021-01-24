@@ -16,6 +16,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import {useStyles} from "./NavBar.style"
 import {Drawer} from "../Drawer/Drawer"
+import {Link} from "react-router-dom"
 
 
 export function NavBar() {
@@ -70,13 +71,14 @@ export function NavBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <LockIcon />
-        </IconButton>
-
-      </MenuItem>
-
+      <Link to="/login" className={classes.lockIconMobil}>
+        <MenuItem>
+          <IconButton aria-label="show 4 new mails" color="inherit">
+            <LockIcon />
+          </IconButton>
+          <p>Login</p>
+        </MenuItem>
+      </Link>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -96,9 +98,11 @@ export function NavBar() {
       <AppBar position="static">
         <Toolbar>
           <Drawer />
-          <Typography className={classes.title} variant="h6" noWrap>
-            Blog
-          </Typography>
+          <Link to="/" className={classes.title}>
+            <Typography  variant="h6" noWrap>
+              Blog
+            </Typography>
+          </Link>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -124,9 +128,11 @@ export function NavBar() {
             </FormControl>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <LockIcon />
-            </IconButton>
+            <Link to="/login" className={classes.lockIcon}>
+              <IconButton aria-label="show 4 new mails" color="inherit">
+                <LockIcon />
+              </IconButton>
+            </Link>
 
             <IconButton
               edge="end"
