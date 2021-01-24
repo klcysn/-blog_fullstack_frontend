@@ -3,6 +3,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
     grow: {
       flexGrow: 1,
+      // minWidth: "318px"
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -12,6 +13,8 @@ export const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.up('sm')]: {
         display: 'block',
       },
+      color: "white",
+      textDecoration: "none"
     },
     search: {
       position: 'relative',
@@ -65,9 +68,19 @@ export const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
+        [theme.breakpoints.down('xs')]: {
+          display: 'none',
+        },
       },
     select: {
-        color: "white"
+        color: "white",
+    },
+    lockIcon:{
+      color: "white"
+    },
+    lockIconMobil:{
+      color: "black",
+      textDecoration: "none"
     }
   }));
   
