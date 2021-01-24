@@ -6,10 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
-import {useStyles} from "./Login.style"
+import {useStyles} from "./Register.style"
 
 
-export function Login() {
+export function Register() {
   const classes = useStyles();
 
   return (
@@ -29,7 +29,23 @@ export function Login() {
         />
         <TextField
             id="outlined-secondary"
+            label="Email"
+            variant="outlined"
+            color="primary"
+            className={classes.textField}
+            type="email"
+        />
+        <TextField
+            id="outlined-secondary"
             label="Password"
+            variant="outlined"
+            color="primary"
+            className={classes.textField}
+            type="password"
+        />
+        <TextField
+            id="outlined-secondary"
+            label="Confirm Password"
             variant="outlined"
             color="primary"
             className={classes.textField}
@@ -39,12 +55,12 @@ export function Login() {
         variant="contained"
         color="primary"
         className={classes.button}
-        endIcon={<Icon>send</Icon>}
+        endIcon={<Icon>lock_open</Icon>}
         >
-        Sign In
+        Register
         </Button>
         <Typography className={classes.link}>
-        Don't you have an account? <Link to="/register">Register</Link>
+        Already have an account? <Link to="/login">Log In</Link>
         </Typography>
         </form>
     </div>

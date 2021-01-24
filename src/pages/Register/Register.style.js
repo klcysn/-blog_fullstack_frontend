@@ -37,6 +37,6 @@ export const useStyles = makeStyles((theme) => ({
           },
       },
       link:{
-          alignSelf: "flex-end"
-      }
+        alignSelf: "flex-end"
+    }
   }));

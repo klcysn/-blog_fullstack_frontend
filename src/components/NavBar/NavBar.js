@@ -71,7 +71,7 @@ export function NavBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <Link to="/login" className={classes.lockIconMobil}>
+      <Link to="/register" className={classes.lockIconMobil}>
         <MenuItem>
           <IconButton aria-label="show 4 new mails" color="inherit">
             <LockIcon />
@@ -128,7 +128,7 @@ export function NavBar() {
             </FormControl>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to="/login" className={classes.lockIcon}>
+            <Link to="/register" className={classes.lockIcon}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <LockIcon />
               </IconButton>
