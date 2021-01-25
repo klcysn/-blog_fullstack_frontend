@@ -15,7 +15,7 @@ export const Home = () =>{
               <MyCarousel />
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} className={classes.postArea} sm={12}>
             <Paper className={classes.paper}>xs=6</Paper>
           </Grid>
         </Grid>

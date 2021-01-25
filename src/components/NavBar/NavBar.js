@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,12 +17,17 @@ import InputLabel from '@material-ui/core/InputLabel';
 import {useStyles} from "./NavBar.style"
 import {Drawer} from "../Drawer/Drawer"
 import {Link} from "react-router-dom"
-
+import {FetchData} from "../../helper/FetchData"
 
 export function NavBar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [category, setCategory] = useState([])
+
+  useEffect(()=>{
+    FetchData("https://blog-fullstack-backend.herokuapp.com/category-list/").then((data)=>setCategory(data))
+  },[])
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -92,7 +97,6 @@ export function NavBar() {
       </MenuItem>
     </Menu>
   );
-
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -122,8 +126,7 @@ export function NavBar() {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={1}>Option 1</MenuItem>
-                <MenuItem value={2}>Option 2</MenuItem>
+                {category.map((item) => <MenuItem value={1}>{item.name}</MenuItem>)}
               </Select>
             </FormControl>
           <div className={classes.grow} />

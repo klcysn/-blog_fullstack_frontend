@@ -19,5 +19,8 @@ export const useStyles = makeStyles((theme) => ({
     },
     carousel:{
         marginTop: "1rem",
+    },
+    postArea:{
+      backgroundColor: "#6A7278"
     }
   }));
