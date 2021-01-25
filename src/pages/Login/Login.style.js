@@ -15,16 +15,22 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         alignItems: "center",
         rowGap: "1rem",
-        marginTop: "1rem"
+        marginTop: "1rem",
     },
     textField:{
-        width: "20rem",
+      minWidth: "15rem",
+      [theme.breakpoints.up('sm')]: {
+        width: "25rem",
+      },
     },
     icon:{
         fontSize: 70,
     },
     button: {
-        width: "20rem"
+        minWidth: "15rem",
+        [theme.breakpoints.up('sm')]: {
+          width: "25rem",
+        },
       },
       closeIcon:{
           position: 'absolute',
@@ -37,6 +43,8 @@ export const useStyles = makeStyles((theme) => ({
           },
       },
       link:{
+        [theme.breakpoints.up('sm')]: {
           alignSelf: "flex-end"
-      }
+        },
+    }
   }));
