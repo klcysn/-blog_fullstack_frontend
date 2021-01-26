@@ -4,23 +4,21 @@ export const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
     },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
     carouselContainer:{
         backgroundImage: "url('https://images.pexels.com/photos/4173624/pexels-photo-4173624.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         height: "92vh",
-        position: "relative",
-        // zIndex: -1,
+        backgroundAttachment: "fixed",
     },
     carousel:{
         marginTop: "1rem",
     },
     postArea:{
-      backgroundColor: "#6A7278"
+      backgroundColor: "white",
+      backgroundImage: "url('https://images.pexels.com/photos/220118/pexels-photo-220118.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')",
+      backgroundAttachment: "fixed",
+      backgroundSize: "cover",
+      minHeight: "50vh"
     }
   }));
