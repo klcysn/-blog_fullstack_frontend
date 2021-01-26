@@ -3,7 +3,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
     grow: {
       flexGrow: 1,
-      // minWidth: "318px"
+      minWidth: "318px",
       position: "relative",
       zIndex: 1,
     },

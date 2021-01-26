@@ -4,6 +4,7 @@ export const useStyles = makeStyles((theme) => ({
     container: {
       display: 'flex',
       margin: "2rem 5rem 0rem 5rem",
+      cursor: "pointer"
       
     },
     media: {
@@ -19,7 +20,12 @@ export const useStyles = makeStyles((theme) => ({
         borderRadius: "200px",
         justifyContent: "center",
         alignItems: "center",
-        paddingTop: "1rem",
+        paddingTop: "0rem",
+        marginBottom: "-0.6rem"
+      },
+      header:{
+        paddingTop: "2rem",
+        marginBottom: "-1rem"
       },
       avatar: {
         backgroundColor: "#9b0000",
@@ -39,9 +45,6 @@ export const useStyles = makeStyles((theme) => ({
         },
       },
       pagination:{
-        '& > *': {
-          marginTop: theme.spacing(2),
-        },
         display: 'flex',
         margin: "0rem 5rem",
       },

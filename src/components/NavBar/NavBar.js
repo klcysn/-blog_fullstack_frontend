@@ -126,7 +126,7 @@ export function NavBar() {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {category.map((item) => <MenuItem value={1}>{item.name}</MenuItem>)}
+                {category?.map((item) => <MenuItem value={1}>{item.name}</MenuItem>)}
               </Select>
             </FormControl>
           <div className={classes.grow} />

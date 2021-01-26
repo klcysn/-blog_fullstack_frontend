@@ -9,12 +9,12 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Slide from "@material-ui/core/Slide";
 import { FetchData } from "../../helper/FetchData";
-
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ModeCommentIcon from "@material-ui/icons/ModeComment";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Badge from "@material-ui/core/Badge";
+import {useHistory} from "react-router-dom"
 
 const useStyles = makeStyles({
   root: {
@@ -23,6 +23,7 @@ const useStyles = makeStyles({
     borderRadius: "55rem",
     overflow: "hidden",
     boxShadow: "0px 0px 3px 5px lightpink",
+    cursor: "pointer"
   },
   media: {
     height: "25rem",
@@ -40,6 +41,7 @@ const useStyles = makeStyles({
 });
 
 export function CarouselCard() {
+  const history = useHistory()
   const classes = useStyles();
   const [index, setIndex] = useState(0);
   const [checked, setChecked] = useState(true);
@@ -63,7 +65,6 @@ export function CarouselCard() {
   };
 
   useEffect(() => {
-    console.log("fetchhhhhhhhhhhhhhhhhhh")
     FetchData(
       "https://blog-fullstack-backend.herokuapp.com/post/?page=1"
     ).then(({ results }) => setPosts(results)).catch((err)=>console.log({err}));
@@ -81,12 +82,12 @@ export function CarouselCard() {
           <CardMedia
             className={classes.media}
             image={posts[index]?.media || "/blog-image.png"}
+            onClick={()=>history.push(`/post-detail/${posts[index].slug}`)}
           />
-          <CardContent>
+          <CardContent onClick={()=>history.push(`/post-detail/${posts[index].slug}`)}>
             <Typography
               align="center"
               className={classes.head}
-              gutterBottom
               variant="h5"
               component="h2"
             >
