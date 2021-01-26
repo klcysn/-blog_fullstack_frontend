@@ -18,8 +18,10 @@ import moment from "moment";
 import Badge from "@material-ui/core/Badge";
 import Pagination from '@material-ui/lab/Pagination';
 import CardActionArea from "@material-ui/core/CardActionArea";
+import {useHistory} from "react-router-dom"
 
 export const PostCard = () => {
+  const history = useHistory()
   const classes = useStyles();
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
@@ -28,11 +30,12 @@ export const PostCard = () => {
       `https://blog-fullstack-backend.herokuapp.com/post/?page=${page}`
     ).then((results) => setPosts(results)).catch((err)=>console.log({err}));
   }, [page]);
+
   return (
-    <Grid container spacing={3} justify="center">
+    <Grid container spacing={0} justify="center">
       {posts.results?.map((post, i) => {
         return (
-          <Grid item className={classes.container}>
+          <Grid item className={classes.container} onClick={()=>history.push(`/post-detail/${post.slug}`)}>
             <Grow
               in={true}
               style={{ transformOrigin: "0 0 0" }}
@@ -58,9 +61,6 @@ export const PostCard = () => {
                 <CardContent className={classes.content}>
                   <Typography
                     variant="h6"
-                    // gutterBottom
-                    // color="textPrimary"
-                    // component="h"
                   >
                     {post?.title.length>16 ? post?.title.slice(0, 15) + "..." : post?.title}
                   </Typography>
