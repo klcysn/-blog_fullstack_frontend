@@ -19,6 +19,6 @@ export const useStyles = makeStyles((theme) => ({
       backgroundImage: "url('https://images.pexels.com/photos/220118/pexels-photo-220118.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')",
       backgroundAttachment: "fixed",
       backgroundSize: "cover",
-      minHeight: "50vh"
+      minHeight: "98vh"
     }
   }));

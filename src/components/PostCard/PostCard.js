@@ -17,18 +17,17 @@ import Grid from "@material-ui/core/Grid";
 import moment from "moment";
 import Badge from "@material-ui/core/Badge";
 import Pagination from '@material-ui/lab/Pagination';
+import CardActionArea from "@material-ui/core/CardActionArea";
 
 export const PostCard = () => {
   const classes = useStyles();
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   useEffect(() => {
-    console.log("fetchhhhhhh")
     FetchData(
       `https://blog-fullstack-backend.herokuapp.com/post/?page=${page}`
     ).then((results) => setPosts(results)).catch((err)=>console.log({err}));
   }, [page]);
-  console.log({posts});
   return (
     <Grid container spacing={3} justify="center">
       {posts.results?.map((post, i) => {
@@ -40,6 +39,7 @@ export const PostCard = () => {
               {...{ timeout: 1000 * i }}
             >
               <Card className={classes.card}>
+              <CardActionArea>
                 <CardHeader
                   avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
@@ -48,6 +48,7 @@ export const PostCard = () => {
                   }
                   title={post?.username}
                   subheader={moment(post?.created_date).format("MMMM Do YYYY")}
+                  className={classes.header}
                 />
                 <CardMedia
                   className={classes.media}
@@ -88,6 +89,7 @@ export const PostCard = () => {
                     </Badge>
                   </IconButton>
                 </CardActions>
+                </CardActionArea>
               </Card>
             </Grow>
           </Grid>

@@ -23,6 +23,7 @@ const useStyles = makeStyles({
     borderRadius: "55rem",
     overflow: "hidden",
     boxShadow: "0px 0px 3px 5px lightpink",
+    cursor: "pointer"
   },
   media: {
     height: "25rem",
@@ -86,7 +87,6 @@ export function CarouselCard() {
             <Typography
               align="center"
               className={classes.head}
-              gutterBottom
               variant="h5"
               component="h2"
             >
