@@ -33,9 +33,9 @@ export const PostCard = () => {
 
   return (
     <Grid container spacing={0} justify="center">
-      {posts.results?.map((post, i) => {
+      {posts?.results?.map((post, i) => {
         return (
-          <Grid item className={classes.container} onClick={()=>history.push(`/post-detail/${post.slug}`)}>
+          <Grid item className={classes.container} >
             <Grow
               in={true}
               style={{ transformOrigin: "0 0 0" }}
@@ -57,6 +57,7 @@ export const PostCard = () => {
                   className={classes.media}
                   image={post.media || "/blog-image.png"}
                   title="Paella dish"
+                  onClick={()=>history.push(`/post-detail/${post.slug}`)}
                 />
                 <CardContent className={classes.content}>
                   <Typography
@@ -96,7 +97,7 @@ export const PostCard = () => {
         );
       })}
       <Grid item xs={12} className={classes.pagination} justify="center">
-        <Pagination count={Math.ceil(posts.count/5)} variant="outlined" onChange={(event, value)=>setPage(value)} size="large" color="secondary" />
+        <Pagination count={Math.ceil(posts?.count/5)} variant="outlined" onChange={(event, value)=>setPage(value)} size="large" color="secondary" />
       </Grid>
     </Grid>
   );

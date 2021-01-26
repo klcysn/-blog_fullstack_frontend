@@ -77,13 +77,14 @@ export function CarouselCard() {
   }, [index]);
   return (
     <Slide direction={direction} in={checked} mountOnEnter unmountOnExit>
-      <Card className={classes.root} onClick={()=>history.push(`/post-detail/${posts[index].slug}`)}>
+      <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
             className={classes.media}
             image={posts[index]?.media || "/blog-image.png"}
+            onClick={()=>history.push(`/post-detail/${posts[index].slug}`)}
           />
-          <CardContent>
+          <CardContent onClick={()=>history.push(`/post-detail/${posts[index].slug}`)}>
             <Typography
               align="center"
               className={classes.head}
