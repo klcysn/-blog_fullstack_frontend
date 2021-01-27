@@ -13,16 +13,17 @@ import Tooltip from "@material-ui/core/Tooltip";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
+import Pagination from '@material-ui/lab/Pagination';
 
 export const Comment = ({ slug }) => {
   const classes = useStyles();
   const [comment, setComment] = useState([]);
+  const [page, setPage] = useState(1)
   useEffect(() => {
-    FetchData(`https://blog-fullstack-backend.herokuapp.com/comment/${slug}`)
-      .then(({ results }) => setComment(results))
+    FetchData(`https://blog-fullstack-backend.herokuapp.com/comment/${slug}/?page=${page}`)
+      .then(( results ) => setComment(results))
       .catch((err) => console.log({ err }));
-  }, []);
-
+  }, [page]);
   return (
     <div className={classes.root}>
         <div className={classes.container}>
@@ -37,7 +38,7 @@ export const Comment = ({ slug }) => {
         </div>
       ) : null}
       <Grid container justify="center" spacing={3}>
-        {comment?.map((item) => {
+        {comment.results?.map((item) => {
           return (
             <Grid item className={classes.paperContainer} xs={12}>
               <Paper className={classes.paper}>
@@ -68,6 +69,9 @@ export const Comment = ({ slug }) => {
             </Grid>
           );
         })}
+        <Grid item xs={12} className={classes.pagination} justify="center">
+            <Pagination count={Math.ceil(comment?.count/5)} variant="outlined" onChange={(event, value)=>setPage(value)} size="large" color="secondary" />
+        </Grid>
       </Grid>
     </div>
   );

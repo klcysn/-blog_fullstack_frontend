@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
       // width: "99vw",
       padding:0,
-      margin:0
+      margin:0,
     },
     carouselContainer:{
         backgroundImage: "url('https://images.pexels.com/photos/4173624/pexels-photo-4173624.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')",
@@ -22,6 +22,7 @@ export const useStyles = makeStyles((theme) => ({
       backgroundAttachment: "fixed",
       backgroundSize: "cover",
       minHeight: "100vh",
+      paddingBottom: "0.5rem"
     
     }
   }));

@@ -51,4 +51,8 @@ export const useStyles = makeStyles((theme) => ({
     select: {
         alignSelf: "flex-start"
     },
+    pagination:{
+        display: 'flex',
+        margin: "0.5rem 5rem",
+      },
   }));
