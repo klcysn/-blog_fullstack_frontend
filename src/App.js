@@ -1,12 +1,17 @@
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {createContext, useState} from "react"
 import "./App.css"
 import {NavBar} from "./components/NavBar/NavBar"
 import {Footer} from "./components/Footer/Footer"
 import {Login, Register, Home, PostDetail, PostForm} from "./pages"
 
+export const AuthContext = createContext()
+
 function App() {
+  const [Authorization, setAuthorization] = useState("")
   return (
     <div className="appContainer">
+      <AuthContext.Provider value={{Authorization, setAuthorization}}>
       <Router >
         <NavBar />
         <Switch>
@@ -18,6 +23,7 @@ function App() {
         </Switch>
         <Footer />
       </Router>
+      </AuthContext.Provider>
     </div>
   );
 }

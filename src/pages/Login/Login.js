@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import TextField from '@material-ui/core/TextField';
 import LockIcon from '@material-ui/icons/Lock';
 import {Link} from 'react-router-dom';
@@ -9,19 +9,23 @@ import Button from '@material-ui/core/Button';
 import {useStyles} from "./Login.style"
 import {useHistory} from "react-router-dom"
 import axios from "axios"
+import {AuthContext} from "../../App"
 
 
 export function Login() {
   const classes = useStyles();
   const history = useHistory()
+  const {setAuthorization} = useContext(AuthContext)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
-  const [Authorization, setAuthorization] = useState("")
   
   const handleSubmit = () =>{
     axios.post("https://blog-fullstack-backend.herokuapp.com/auth/login/",{username, password, email})
-    .then((respond)=>console.log(respond)).catch((err)=>console.log({err}))
+    .then((response)=>{
+      localStorage.setItem("Authorization", response.data.key)
+      setAuthorization(response.data.key)
+  }).catch((err)=>console.log({err}))
     history.push("/")
   }
 

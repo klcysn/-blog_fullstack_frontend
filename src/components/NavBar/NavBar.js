@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,16 +16,19 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import {useStyles} from "./NavBar.style"
 import {Drawer} from "../Drawer/Drawer"
-import {Link} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 import {FetchData} from "../../helper/FetchData"
 import SendIcon from '@material-ui/icons/Send';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import {AuthContext} from "../../App"
 
 export function NavBar() {
   const classes = useStyles();
+  const history = useHistory()
+  const {Authorization, setAuthorization} = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [category, setCategory] = useState([])
-  const Authorization = localStorage.getItem("Authorization")
 
   useEffect(()=>{
     FetchData("https://blog-fullstack-backend.herokuapp.com/category-list/").then((data)=>setCategory(data))
@@ -50,6 +53,12 @@ export function NavBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleLogout = () =>{
+    localStorage.setItem("Authorization", "")
+    setAuthorization("")
+    history.push("/")
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -157,7 +166,11 @@ export function NavBar() {
             </Link>
             {Authorization
             ?
-            null
+            <Link onClick={handleLogout} className={classes.lockIcon}>
+              <IconButton aria-label="show 4 new mails" color="inherit">
+                <ExitToAppIcon />
+              </IconButton>
+            </Link>
             :
             <Link to="/register" className={classes.lockIcon}>
               <IconButton aria-label="show 4 new mails" color="inherit">
