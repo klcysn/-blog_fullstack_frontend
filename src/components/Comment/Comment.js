@@ -25,6 +25,12 @@ export const Comment = ({ slug }) => {
 
   return (
     <div className={classes.root}>
+        <div className={classes.container}>
+        <form className={classes.formContainer}>
+          <TextField className={classes.inputs} rows={5} id="outlined-textarea" label="Comment" placeholder="Comment" multiline variant="outlined"/>
+          <Button variant="contained" color="primary" className={classes.inputs} endIcon={<Icon>send</Icon>}>Send</Button>
+        </form>
+      </div>
       {comment.length ? (
         <div>
           <h4 className={classes.commentHeader}>{comment?.length} Comments:</h4>
@@ -47,10 +53,7 @@ export const Comment = ({ slug }) => {
                   {moment(item.created_date).format("MMMM Do YYYY, h:mm a")}
                   <div>
                     <IconButton aria-label="add to favorites">
-                      <Badge
-                        badgeContent={item?.commentlike_count}
-                        color="secondary"
-                      >
+                      <Badge badgeContent={item?.commentlike_count} color="secondary">
                         <FavoriteIcon />
                       </Badge>
                     </IconButton>
@@ -66,27 +69,6 @@ export const Comment = ({ slug }) => {
           );
         })}
       </Grid>
-      <div className={classes.container}>
-        <form className={classes.formContainer}>
-          <TextField
-            className={classes.inputs}
-            rows={5}
-            id="outlined-textarea"
-            label="Comment"
-            placeholder="Comment"
-            multiline
-            variant="outlined"
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.inputs}
-            endIcon={<Icon>send</Icon>}
-          >
-            Send
-          </Button>
-        </form>
-      </div>
     </div>
   );
 };
