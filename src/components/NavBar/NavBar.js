@@ -126,11 +126,16 @@ export function NavBar() {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {category?.map((item) => <MenuItem value={1}>{item.name}</MenuItem>)}
+                {category?.map((item) => <MenuItem value={item.name}>{item.name}</MenuItem>)}
               </Select>
             </FormControl>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <Link to="/post-send" className={classes.postLink}>
+              <Typography variant="h6" noWrap>
+                Send a Post
+              </Typography>
+            </Link>
             <Link to="/register" className={classes.lockIcon}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <LockIcon />
