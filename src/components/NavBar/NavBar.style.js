@@ -59,6 +59,7 @@ export const useStyles = makeStyles((theme) => ({
       display: 'none',
       [theme.breakpoints.up('md')]: {
         display: 'flex',
+        alignItems: "center"
       },
     },
     sectionMobile: {
@@ -66,6 +67,7 @@ export const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.up('md')]: {
         display: 'none',
       },
+      alignItems: "center"
     },
     formControl: {
         margin: theme.spacing(1),
@@ -83,6 +85,10 @@ export const useStyles = makeStyles((theme) => ({
     lockIconMobil:{
       color: "black",
       textDecoration: "none"
+    },
+    postLink:{
+      color: "white",
+      textDecoration: "none",
     }
   }));
   

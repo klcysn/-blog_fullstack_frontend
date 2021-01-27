@@ -5,7 +5,6 @@ export const useStyles = makeStyles((theme) => ({
       display: 'flex',
       margin: "2rem 5rem 0rem 5rem",
       cursor: "pointer"
-      
     },
     media: {
         height: 0,
@@ -21,7 +20,7 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         alignItems: "center",
         paddingTop: "0rem",
-        marginBottom: "-0.6rem"
+        marginBottom: "0.3rem"
       },
       header:{
         paddingTop: "2rem",
@@ -33,11 +32,12 @@ export const useStyles = makeStyles((theme) => ({
         marginRight: "-3.5rem"
       },
       content:{
-          marginBottom: "-1.7rem",
+          marginBottom: "-0.4rem",
           marginTop: "-1.4rem"
       },
       buttons:{
-          justifyContent: "center"
+          justifyContent: "center",
+          marginTop: "-1.2rem"
       },
       badge:{
         '& > *': {

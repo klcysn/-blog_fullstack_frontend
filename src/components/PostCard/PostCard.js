@@ -42,11 +42,11 @@ export const PostCard = () => {
               {...{ timeout: 1000 * i }}
             >
               <Card className={classes.card}>
-              <CardActionArea>
+              <CardActionArea onClick={()=>history.push(`/post-detail/${post.slug}`)}>
                 <CardHeader
                   avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
-                      R
+                      {post?.username[0].toUpperCase()}
                     </Avatar>
                   }
                   title={post?.username}
@@ -57,7 +57,6 @@ export const PostCard = () => {
                   className={classes.media}
                   image={post.media || "/blog-image.png"}
                   title="Paella dish"
-                  onClick={()=>history.push(`/post-detail/${post.slug}`)}
                 />
                 <CardContent className={classes.content}>
                   <Typography
@@ -73,6 +72,7 @@ export const PostCard = () => {
                     {post?.content.slice(0, 50)}...
                   </Typography>
                 </CardContent>
+                </CardActionArea>
                 <CardActions disableSpacing className={classes.buttons}>
                   <IconButton aria-label="add to favorites">
                     <Badge badgeContent={post?.postview_count} color="secondary">
@@ -90,7 +90,6 @@ export const PostCard = () => {
                     </Badge>
                   </IconButton>
                 </CardActions>
-                </CardActionArea>
               </Card>
             </Grow>
           </Grid>

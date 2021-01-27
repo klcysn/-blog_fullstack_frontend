@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,11 +16,16 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import {useStyles} from "./NavBar.style"
 import {Drawer} from "../Drawer/Drawer"
-import {Link} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 import {FetchData} from "../../helper/FetchData"
+import SendIcon from '@material-ui/icons/Send';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import {AuthContext} from "../../App"
 
 export function NavBar() {
   const classes = useStyles();
+  const history = useHistory()
+  const {Authorization, setAuthorization} = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [category, setCategory] = useState([])
@@ -49,6 +54,12 @@ export function NavBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogout = () =>{
+    localStorage.setItem("Authorization", "")
+    setAuthorization("")
+    history.push("/")
+  }
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -76,15 +87,26 @@ export function NavBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      {Authorization
+      ?
+        <MenuItem onClick={handleLogout} className={classes.lockIconMobil}>
+          <IconButton aria-haspopup="true" color="inherit">
+            <ExitToAppIcon />
+          </IconButton>
+            <p>Logout</p>
+        </MenuItem>
+      :
       <Link to="/register" className={classes.lockIconMobil}>
         <MenuItem>
-          <IconButton aria-label="show 4 new mails" color="inherit">
+          <IconButton color="inherit">
             <LockIcon />
           </IconButton>
           <p>Login</p>
         </MenuItem>
-      </Link>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      </Link>}
+      {Authorization
+      ?
+        <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -95,8 +117,19 @@ export function NavBar() {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
+      :
+      null}
+      <Link to={Authorization ? "/post-send" : "/register"} className={classes.lockIconMobil}>
+        <MenuItem>
+          <IconButton aria-label="show 4 new mails" color="inherit">
+            <SendIcon />
+          </IconButton>
+          <p>Send a Post</p>
+        </MenuItem>
+      </Link>
     </Menu>
   );
+  console.log({Authorization})
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -126,17 +159,33 @@ export function NavBar() {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {category?.map((item) => <MenuItem value={1}>{item.name}</MenuItem>)}
+                {category?.map((item) => <MenuItem value={item.name}>{item.name}</MenuItem>)}
               </Select>
             </FormControl>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <Link to={Authorization ? "/post-send" : "/register"} className={classes.postLink}>
+              <Typography variant="h6" noWrap>
+                Send a Post
+              </Typography>
+            </Link>
+            {Authorization
+            ?
+            <Link onClick={handleLogout} className={classes.lockIcon}>
+              <IconButton aria-label="show 4 new mails" color="inherit">
+                <ExitToAppIcon />
+              </IconButton>
+            </Link>
+            :
             <Link to="/register" className={classes.lockIcon}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <LockIcon />
               </IconButton>
             </Link>
+            }
 
+           {Authorization
+           ?
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -147,6 +196,9 @@ export function NavBar() {
             >
               <AccountCircle />
             </IconButton>
+            :
+            null
+            }
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

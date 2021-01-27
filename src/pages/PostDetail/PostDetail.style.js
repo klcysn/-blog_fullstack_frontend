@@ -8,10 +8,7 @@ export const useStyles = makeStyles((theme) => ({
       // height: "40vh"
     },
     container:{
-      // display: "flex",
-      // justifyContent: "center",
       position: "relative",
-      // padding:0
     },
     image:{
       height: "60vh",
@@ -25,6 +22,9 @@ export const useStyles = makeStyles((theme) => ({
       color: "white",
       width: "100%",
       padding: "1rem",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
     title:{
       margin:0
@@ -46,5 +46,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     contentTitle:{
       fontSize: "2rem"
+    },
+    iconButtons:{
+      alignSelf: "flex-end",
+      marginRight: "2rem",
     }
   }));
