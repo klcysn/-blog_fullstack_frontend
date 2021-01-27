@@ -28,7 +28,7 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: "-1rem"
       },
       avatar: {
-        backgroundColor: "#9b0000",
+        backgroundColor: "#9b0001",
         marginLeft: "1rem",
         marginRight: "-3.5rem"
       },

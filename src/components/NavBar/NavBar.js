@@ -89,11 +89,16 @@ export function NavBar() {
     >
       {Authorization
       ?
-      null
+        <MenuItem onClick={handleLogout} className={classes.lockIconMobil}>
+          <IconButton aria-haspopup="true" color="inherit">
+            <ExitToAppIcon />
+          </IconButton>
+            <p>Logout</p>
+        </MenuItem>
       :
       <Link to="/register" className={classes.lockIconMobil}>
         <MenuItem>
-          <IconButton aria-label="show 4 new mails" color="inherit">
+          <IconButton color="inherit">
             <LockIcon />
           </IconButton>
           <p>Login</p>
@@ -114,7 +119,7 @@ export function NavBar() {
       </MenuItem>
       :
       null}
-      <Link to="/post-send" className={classes.lockIconMobil}>
+      <Link to={Authorization ? "/post-send" : "/register"} className={classes.lockIconMobil}>
         <MenuItem>
           <IconButton aria-label="show 4 new mails" color="inherit">
             <SendIcon />
@@ -159,7 +164,7 @@ export function NavBar() {
             </FormControl>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to="/post-send" className={classes.postLink}>
+            <Link to={Authorization ? "/post-send" : "/register"} className={classes.postLink}>
               <Typography variant="h6" noWrap>
                 Send a Post
               </Typography>

@@ -8,7 +8,7 @@ import {Login, Register, Home, PostDetail, PostForm} from "./pages"
 export const AuthContext = createContext()
 
 function App() {
-  const [Authorization, setAuthorization] = useState("")
+  const [Authorization, setAuthorization] = useState(localStorage.getItem("Authorization"))
   return (
     <div className="appContainer">
       <AuthContext.Provider value={{Authorization, setAuthorization}}>

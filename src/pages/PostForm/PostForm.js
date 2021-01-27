@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useState, useContext} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,13 +7,24 @@ import {FetchData} from "../../helper/FetchData"
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
+import {AuthContext} from "../../App"
+import {useHistory} from "react-router-dom"
 
 export const PostForm = () =>{
+    const {Authorization} = useContext(AuthContext)
+    const history = useHistory()
     const classes = useStyles();
     const [category, setCategory] = useState([])
     useEffect(()=>{
         FetchData("https://blog-fullstack-backend.herokuapp.com/category-list/").then((data)=>setCategory(data))
       },[])
+    
+    useEffect(()=>{
+        if(!Authorization){
+            history.push("/register")
+        }
+    },[])
+
     return(
         <div className={classes.container}>
 
