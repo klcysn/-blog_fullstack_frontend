@@ -15,17 +15,19 @@ import {AuthContext} from "../../App"
 export function Login() {
   const classes = useStyles();
   const history = useHistory()
-  const {setAuthorization} = useContext(AuthContext)
-  const [username, setUsername] = useState("")
+  const {Authorization, setAuthorization} = useContext(AuthContext)
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   
-  const handleSubmit = () =>{
-    axios.post("https://blog-fullstack-backend.herokuapp.com/auth/login/",{username, password, email})
+  const handleSubmit = async () =>{
+    axios.post("https://blog-fullstack-backend.herokuapp.com/auth/login/",{ password, email})
     .then((response)=>{
       localStorage.setItem("Authorization", response.data.key)
       setAuthorization(response.data.key)
-  }).catch((err)=>console.log({err}))
+      console.log(response.data.key)
+
+    }).catch((err)=>console.log({err}))
+    
     history.push("/")
   }
 
@@ -36,15 +38,6 @@ export function Login() {
         </Link>
         <LockIcon color="primary" className={classes.icon} />
         <form className={classes.form} onSubmit={handleSubmit} autoComplete="off">
-        <TextField
-            id="outlined-secondary"
-            label="User Name"
-            variant="outlined"
-            color="primary"
-            className={classes.textField}
-            type="text"
-            onChange={(e)=>setUsername(e.target.value)}
-        />
         <TextField
             id="outlined-secondary"
             label="Email"

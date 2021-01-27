@@ -5,7 +5,6 @@ export const useStyles = makeStyles((theme) => ({
       display: 'flex',
       margin: "2rem 5rem 0rem 5rem",
       cursor: "pointer"
-      
     },
     media: {
         height: 0,
@@ -28,7 +27,7 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: "-1rem"
       },
       avatar: {
-        backgroundColor: "#9b0001",
+        backgroundColor: "#9b0000",
         marginLeft: "1rem",
         marginRight: "-3.5rem"
       },
