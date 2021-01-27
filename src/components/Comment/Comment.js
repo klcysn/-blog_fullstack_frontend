@@ -24,6 +24,7 @@ export const Comment = ({ slug }) => {
       .then(( results ) => setComment(results))
       .catch((err) => console.log({ err }));
   }, [page]);
+  console.log(comment.results)
   return (
     <div className={classes.root}>
         <div className={classes.container}>
