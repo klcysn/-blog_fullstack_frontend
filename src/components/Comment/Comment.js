@@ -1,5 +1,5 @@
 import { FetchData } from "../../helper/FetchData";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./Comment.style";
@@ -14,9 +14,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import Pagination from '@material-ui/lab/Pagination';
+import {AuthContext} from "../../App"
 
 export const Comment = ({ slug }) => {
   const classes = useStyles();
+  const {Authorization} = useContext(AuthContext)
   const [comment, setComment] = useState([]);
   const [page, setPage] = useState(1)
   useEffect(() => {
@@ -27,12 +29,16 @@ export const Comment = ({ slug }) => {
   console.log(comment.results)
   return (
     <div className={classes.root}>
+        {Authorization
+        ?
         <div className={classes.container}>
-        <form className={classes.formContainer}>
-          <TextField className={classes.inputs} rows={5} id="outlined-textarea" label="Comment" placeholder="Comment" multiline variant="outlined"/>
-          <Button variant="contained" color="primary" className={classes.inputs} endIcon={<Icon>send</Icon>}>Send</Button>
-        </form>
-      </div>
+          <form className={classes.formContainer}>
+            <TextField className={classes.inputs} rows={5} id="outlined-textarea" label="Comment" placeholder="Comment" multiline variant="outlined"/>
+            <Button variant="contained" color="primary" className={classes.inputs} endIcon={<Icon>send</Icon>}>Send</Button>
+          </form>
+        </div>
+        :
+        null}
       {comment.length ? (
         <div>
           <h4 className={classes.commentHeader}>{comment?.length} Comments:</h4>
