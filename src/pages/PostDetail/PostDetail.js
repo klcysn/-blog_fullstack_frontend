@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { FetchData } from "../../helper/FetchData";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./PostDetail.style";
 import moment from "moment";
@@ -11,8 +11,11 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 import Tooltip from '@material-ui/core/Tooltip';
+import {PostForm} from "../../pages"
+import {AuthContext} from "../../App"
 
 export const PostDetail = () => {
+  const {currentUser} = useContext(AuthContext)
   const { slug } = useParams();
   const [post, setPost] = useState([]);
   const classes = useStyles();
@@ -23,7 +26,8 @@ export const PostDetail = () => {
       .then((results) => setPost(results))
       .catch((err) => console.log({ err }));
   }, []);
-  console.log(post);
+  console.log({post});
+  console.log({currentUser});
   return (
     <Grid container xs={12} justify="center" className={classes.root}>
       <Grid item>
@@ -66,9 +70,14 @@ export const PostDetail = () => {
           {post?.content}
         </Paper>
       </Grid>
+      {post.user == currentUser
+      ?
+      <PostForm update={post} />
+      :
       <Grid item xs={12}>
         <Comment slug={post.slug} />
       </Grid>
+      }
     </Grid>
   );
 };
