@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import TextField from '@material-ui/core/TextField';
 import LockIcon from '@material-ui/icons/Lock';
 import {Link} from 'react-router-dom';
@@ -15,7 +15,7 @@ import {AuthContext} from "../../App"
 export function Login() {
   const classes = useStyles();
   const history = useHistory()
-  const {Authorization, setAuthorization} = useContext(AuthContext)
+  const {Authorization, setAuthorization, setCurrentUser} = useContext(AuthContext)
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   
@@ -23,11 +23,8 @@ export function Login() {
     axios.post("https://blog-fullstack-backend.herokuapp.com/auth/login/",{ password, email})
     .then((response)=>{
       localStorage.setItem("Authorization", response.data.key)
-      setAuthorization(response.data.key)
-      console.log(response.data.key)
-
+      document.location.reload()
     }).catch((err)=>console.log({err}))
-    
     history.push("/")
   }
 

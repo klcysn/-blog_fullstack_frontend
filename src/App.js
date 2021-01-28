@@ -12,19 +12,21 @@ export const AuthContext = createContext()
 function App() {
   const [Authorization, setAuthorization] = useState(localStorage.getItem("Authorization"))
   const [currentUser, setCurrentUser] = useState(localStorage.getItem("currentUser"))
+
   useEffect(()=>{
     axios.get("https://blog-fullstack-backend.herokuapp.com/auth/user/",{
         headers: {
           'Authorization': `Token ${Authorization}`
         } 
         }).then(({data})=>{
-          console.log(data.pk)
-          localStorage.setItem("currentUser", data.pk)}).catch((err)=>console.log({err}))
+          setCurrentUser(data.pk)
+          localStorage.setItem("currentUser", data.pk)
+        }).catch((err)=>console.log({err}))
       },[Authorization])
-      console.log(currentUser)
+  
   return (
     <div className="appContainer">
-      <AuthContext.Provider value={{Authorization, setAuthorization, currentUser}}>
+      <AuthContext.Provider value={{Authorization, setAuthorization, currentUser, setCurrentUser}}>
       <Router >
         <NavBar />
         <Switch>

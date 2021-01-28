@@ -1,5 +1,6 @@
 import { FetchData } from "../../helper/FetchData";
 import { useEffect, useState, useContext } from "react";
+import {useHistory} from "react-router-dom"
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./Comment.style";
@@ -12,29 +13,66 @@ import MoodBadIcon from "@material-ui/icons/MoodBad";
 import Tooltip from "@material-ui/core/Tooltip";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Icon from '@material-ui/core/Icon';
 import Pagination from '@material-ui/lab/Pagination';
 import {AuthContext} from "../../App"
+import axios from "axios"
+import {DeleteAlert} from "../../helper/DeleteAlert"
 
-export const Comment = ({ slug }) => {
+export const Comment = ({ slug, postId }) => {
+  const history = useHistory()
   const classes = useStyles();
-  const {Authorization} = useContext(AuthContext)
+  const {Authorization, currentUser} = useContext(AuthContext)
   const [comment, setComment] = useState([]);
+  const [text, setText] = useState([]);
   const [page, setPage] = useState(1)
+  const [openAlert, setOpenAlert] = useState(false)
+  const [force, setForce] = useState(false)
+  
   useEffect(() => {
     FetchData(`https://blog-fullstack-backend.herokuapp.com/comment/${slug}/?page=${page}`)
       .then(( results ) => setComment(results))
       .catch((err) => console.log({ err }));
-  }, [page]);
-  console.log(comment.results)
+  }, [page, force]);
+
+  const handleSubmit = () =>{
+    axios.post(`https://blog-fullstack-backend.herokuapp.com/comment/${slug}/`,{
+      user: currentUser,
+      comment: text,
+      post: postId
+
+    },
+    {
+      headers:{
+        "Authorization": `Token ${Authorization}`
+      }
+    }).then(()=>setForce(s=>!s)).catch((err)=>console.log({err}))
+    setText("")
+  }
+
+  const handleDelete = (permission, pk) =>{
+    if(permission){
+      axios.delete(`https://blog-fullstack-backend.herokuapp.com/comment-detail/${slug}/${pk}`,
+      {
+        headers:{
+          "Authorization": `Token ${Authorization}`
+        }
+      }).then(()=>setForce(s=>!s)).catch((err)=>console.log({err}))
+      
+    }
+    setOpenAlert(false)
+  }
+
   return (
     <div className={classes.root}>
         {Authorization
         ?
         <div className={classes.container}>
-          <form className={classes.formContainer}>
-            <TextField className={classes.inputs} rows={5} id="outlined-textarea" label="Comment" placeholder="Comment" multiline variant="outlined"/>
-            <Button variant="contained" color="primary" className={classes.inputs} endIcon={<Icon>send</Icon>}>Send</Button>
+          <form className={classes.formContainer} >
+            <TextField className={classes.inputs} rows={5} id="outlined-textarea" label="Comment"
+            onChange={(e)=>setText(e.target.value)} placeholder="Comment" multiline variant="outlined"/>
+            <Button variant="contained" color="primary" onClick={handleSubmit} className={classes.inputs} endIcon={<Icon>send</Icon>}>Send</Button>
           </form>
         </div>
         :
@@ -60,6 +98,18 @@ export const Comment = ({ slug }) => {
                 <div className={classes.buttonContainer}>
                   {moment(item.created_date).format("MMMM Do YYYY, h:mm a")}
                   <div>
+                    {item.user == currentUser
+                    ?
+                    <>
+                    <DeleteAlert openAlert={openAlert} permission={(permission)=>handleDelete(permission, item.pk)}/>
+                    <IconButton onClick={()=>setOpenAlert(true)}>
+                      <Badge badgeContent={item?.commentlike_count} color="secondary">
+                        <DeleteIcon />
+                      </Badge>
+                    </IconButton>
+                    </>
+                    :
+                    <>
                     <IconButton aria-label="add to favorites">
                       <Badge badgeContent={item?.commentlike_count} color="secondary">
                         <FavoriteIcon />
@@ -70,6 +120,7 @@ export const Comment = ({ slug }) => {
                         <MoodBadIcon />
                       </Tooltip>
                     </IconButton>
+                    </>}
                   </div>
                 </div>
               </Paper>
