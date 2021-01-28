@@ -21,12 +21,11 @@ import {FetchData} from "../../helper/FetchData"
 import SendIcon from '@material-ui/icons/Send';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {AuthContext} from "../../App"
-import axios from 'axios';
 
 export function NavBar() {
   const classes = useStyles();
   const history = useHistory()
-  const {Authorization, setAuthorization, setCurrentUser, currentUser} = useContext(AuthContext)
+  const {Authorization} = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [category, setCategory] = useState([])
