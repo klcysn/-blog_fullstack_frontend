@@ -29,13 +29,14 @@ export const Comment = ({ slug, postId }) => {
   const [page, setPage] = useState(1)
   const [openAlert, setOpenAlert] = useState(false)
   const [force, setForce] = useState(false)
+  const [pk, setPk] = useState("")
   
   useEffect(() => {
     FetchData(`https://blog-fullstack-backend.herokuapp.com/comment/${slug}/?page=${page}`)
       .then(( results ) => setComment(results))
       .catch((err) => console.log({ err }));
-  }, [page, force]);
-
+  }, [page, force, slug]);
+console.log({slug}, {postId})
   const handleSubmit = () =>{
     axios.post(`https://blog-fullstack-backend.herokuapp.com/comment/${slug}/`,{
       user: currentUser,
@@ -51,9 +52,10 @@ export const Comment = ({ slug, postId }) => {
     setText("")
   }
 
-  const handleDelete = (permission, pk) =>{
+  const handleDelete = (permission) =>{
+    console.log(pk)
     if(permission){
-      axios.delete(`https://blog-fullstack-backend.herokuapp.com/comment-detail/${slug}/${pk}`,
+      axios.delete(`https://blog-fullstack-backend.herokuapp.com/comment-detail/${slug}/${pk}/`,
       {
         headers:{
           "Authorization": `Token ${Authorization}`
@@ -63,7 +65,7 @@ export const Comment = ({ slug, postId }) => {
     }
     setOpenAlert(false)
   }
-
+  console.log(comment)
   return (
     <div className={classes.root}>
         {Authorization
@@ -86,6 +88,7 @@ export const Comment = ({ slug, postId }) => {
         {comment.results?.map((item) => {
           return (
             <Grid item className={classes.paperContainer} xs={12}>
+              <DeleteAlert openAlert={openAlert} permission={(permission)=>handleDelete(permission)}/>
               <Paper className={classes.paper}>
                 <div className={classes.avatarContainer}>
                   <Avatar aria-label="recipe" className={classes.avatar}>
@@ -101,11 +104,11 @@ export const Comment = ({ slug, postId }) => {
                     {item.user == currentUser
                     ?
                     <>
-                    <DeleteAlert openAlert={openAlert} permission={(permission)=>handleDelete(permission, item.pk)}/>
-                    <IconButton onClick={()=>setOpenAlert(true)}>
-                      <Badge badgeContent={item?.commentlike_count} color="secondary">
-                        <DeleteIcon />
-                      </Badge>
+                    <IconButton onClick={()=>{
+                      setPk(item.pk)
+                      setOpenAlert(true)
+                      }}>
+                      <DeleteIcon />
                     </IconButton>
                     </>
                     :

@@ -31,8 +31,9 @@ export const PostDetail = () => {
       .then((results) => setPost(results))
       .catch((err) => console.log({ err }));
   }, []);
-  console.log({post});
-  console.log({currentUser});
+  // console.log({post});
+  // console.log(post.user == currentUser);
+  // console.log(post.slug, post.pk);
   return (
     <Grid container xs={12} justify="center" className={classes.root}>
       <Grid item>

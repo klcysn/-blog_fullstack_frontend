@@ -26,7 +26,7 @@ import axios from 'axios';
 export function NavBar() {
   const classes = useStyles();
   const history = useHistory()
-  const {Authorization, setAuthorization, setCurrentUser} = useContext(AuthContext)
+  const {Authorization, setAuthorization, setCurrentUser, currentUser} = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [category, setCategory] = useState([])
@@ -58,8 +58,8 @@ export function NavBar() {
   const handleLogout = async () =>{
     localStorage.setItem("Authorization", "")
     localStorage.setItem("currentUser", "")
-    history.push("/login")
     document.location.reload()
+    history.push("/login")
   }
 
   const menuId = 'primary-search-account-menu';
