@@ -25,7 +25,7 @@ import {AuthContext} from "../../App"
 export function NavBar() {
   const classes = useStyles();
   const history = useHistory()
-  const {Authorization, setAuthorization} = useContext(AuthContext)
+  const {Authorization} = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [category, setCategory] = useState([])
@@ -54,10 +54,11 @@ export function NavBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleLogout = () =>{
+  const handleLogout = async () =>{
     localStorage.setItem("Authorization", "")
-    setAuthorization("")
-    history.push("/")
+    localStorage.setItem("currentUser", "")
+    document.location.reload()
+    history.push("/login")
   }
 
   const menuId = 'primary-search-account-menu';

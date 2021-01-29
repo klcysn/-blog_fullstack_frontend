@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { FetchData } from "../../helper/FetchData";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./PostDetail.style";
 import moment from "moment";
@@ -11,8 +11,16 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import {PostForm} from "../../pages"
+import {AuthContext} from "../../App"
 
 export const PostDetail = () => {
+  const {currentUser} = useContext(AuthContext)
   const { slug } = useParams();
   const [post, setPost] = useState([]);
   const classes = useStyles();
@@ -23,15 +31,14 @@ export const PostDetail = () => {
       .then((results) => setPost(results))
       .catch((err) => console.log({ err }));
   }, []);
-  console.log(post);
+  // console.log({post});
+  // console.log(post.user == currentUser);
+  // console.log(post.slug, post.pk);
   return (
     <Grid container xs={12} justify="center" className={classes.root}>
       <Grid item>
         <div className={classes.container}>
-          <img
-            src={post?.media || "/blog-image.png"}
-            className={classes.image}
-          />
+          <img src={post?.media || "/blog-image.png"} className={classes.image}/>
           <div className={classes.titleContainer}>
             <div>
               <h1 className={classes.title}>{post?.title}</h1>
@@ -66,9 +73,32 @@ export const PostDetail = () => {
           {post?.content}
         </Paper>
       </Grid>
+     {
+     post.user == currentUser
+      ?
+      <>
+        <Accordion className={classes.content}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography className={classes.heading}>Update/Delete Post</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <PostForm update={post} />
+          </AccordionDetails>
+        </Accordion>
+        <Grid item xs={12}>
+          <Comment slug={post.slug} postId={post.pk} />
+        </Grid>
+      </>
+      :
       <Grid item xs={12}>
-        <Comment slug={post.slug} />
+        <Comment slug={post.slug} postId={post.pk} />
       </Grid>
+      }
+      
     </Grid>
   );
 };

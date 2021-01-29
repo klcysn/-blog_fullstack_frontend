@@ -1,6 +1,6 @@
 import Grow from "@material-ui/core/Grow";
 import React, { useState, useEffect } from "react";
-import { useStyles } from "./PostCard.style";
+// import { useStyles } from "./PostCard.style";
 import { FetchData } from "../../helper/FetchData";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -19,6 +19,59 @@ import Badge from "@material-ui/core/Badge";
 import Pagination from '@material-ui/lab/Pagination';
 import CardActionArea from "@material-ui/core/CardActionArea";
 import {useHistory} from "react-router-dom"
+
+import { makeStyles } from '@material-ui/core/styles';
+
+export const useStyles = makeStyles((theme) => ({
+    container: {
+      display: 'flex',
+      margin: "2rem 5rem 0rem 5rem",
+      cursor: "pointer"
+    },
+    media: {
+        height: 0,
+        paddingTop: '35%', // 16:9,
+        
+      },
+      card: {
+        textAlign: "center",
+        overflow: "hidden",
+        width: "280px",
+        height: "280px",
+        borderRadius: "200px",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingTop: "0rem",
+        marginBottom: "0.3rem"
+      },
+      header:{
+        paddingTop: "2rem",
+        marginBottom: "-1rem"
+      },
+      avatar: {
+        backgroundColor: "#9b0000",
+        marginLeft: "1rem",
+        marginRight: "-3.5rem"
+      },
+      content:{
+          marginBottom: "-0.4rem",
+          marginTop: "-1.4rem"
+      },
+      buttons:{
+          justifyContent: "center",
+          marginTop: "-1.2rem"
+      },
+      badge:{
+        '& > *': {
+          margin: theme.spacing(1),
+        },
+      },
+      pagination:{
+        display: 'flex',
+        margin: "0rem 5rem",
+      },
+   
+  }));
 
 export const PostCard = () => {
   const history = useHistory()
@@ -79,7 +132,7 @@ export const PostCard = () => {
                       <VisibilityIcon />
                     </Badge>
                   </IconButton>
-                  <IconButton aria-label="add to favorites">
+                  <IconButton>
                     <Badge badgeContent={post?.like_count} color="secondary">
                       <FavoriteIcon />
                     </Badge>
