@@ -132,7 +132,7 @@ export const PostCard = () => {
                       <VisibilityIcon />
                     </Badge>
                   </IconButton>
-                  <IconButton aria-label="add to favorites">
+                  <IconButton>
                     <Badge badgeContent={post?.like_count} color="secondary">
                       <FavoriteIcon />
                     </Badge>
