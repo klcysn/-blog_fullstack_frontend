@@ -30,6 +30,8 @@ export const PostDetail = () => {
     )
       .then((results) => setPost(results))
       .catch((err) => console.log({ err }));
+
+    
   }, []);
   // console.log({post});
   // console.log(post.user == currentUser);
