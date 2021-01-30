@@ -140,7 +140,10 @@ export const CardItem = ({post, i}) =>{
         .then(()=>history.push(`/post-detail/${post.slug}`))
         .catch((err)=>console.log(err))
       }else{
-        history.push(`/post-detail/${post.slug}`)
+        history.push({
+          pathname: `/post-detail/${post.slug}`,
+          state:{liked}
+        })
       }
       
     }

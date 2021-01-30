@@ -64,7 +64,10 @@ export function CarouselCard({checked, direction, post}) {
     .then(()=>history.push(`/post-detail/${post.slug}`))
     .catch((err)=>console.log(err))
   }else{
-    history.push(`/post-detail/${post.slug}`)
+    history.push({
+      pathname: `/post-detail/${post.slug}`,
+      state:{liked: true}
+    })
 }
 
 }
