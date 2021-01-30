@@ -74,6 +74,7 @@ export const CardItem = ({post, i}) =>{
     const history = useHistory()
     const classes = useStyles();
     const [liked, setLiked] = useState(false)
+    const [viewed, setViewed] = useState(false)
     
     
     useEffect(()=>{
@@ -85,8 +86,17 @@ export const CardItem = ({post, i}) =>{
                 }
             })
         }).catch((err)=>console.log(err))
-        console.log("fetch enter")
-    },[force])
+
+        FetchData(`https://blog-fullstack-backend.herokuapp.com/post-view/${post.slug}`)
+        .then((data)=>{
+          data.map((view)=>{
+            if(view.user == currentUser){
+              setViewed(true)
+            }
+          })
+        }).catch((err)=>console.log(err))
+
+    },[force, post])
 
     const handleLike = () =>{
         if(liked){
@@ -115,16 +125,35 @@ export const CardItem = ({post, i}) =>{
             .catch((err)=>console.log(err))
         }
     }
-    console.log({liked})
+
+    const lookPost = () =>{
+      console.log({viewed})
+      if(!viewed){
+        axios.post(`https://blog-fullstack-backend.herokuapp.com/post-view/${post.slug}/`,{
+          user: currentUser,
+          post: post.pk
+        },{
+          headers:{
+            "Authorization": `Token ${Authorization}`
+        }
+        })
+        .then(()=>history.push(`/post-detail/${post.slug}`))
+        .catch((err)=>console.log(err))
+      }else{
+        history.push(`/post-detail/${post.slug}`)
+      }
+      
+    }
+
     return(
-        <Grid item className={classes.container} >
+        <Grid item className={classes.container}>
             <Grow
               in={true}
               style={{ transformOrigin: "0 0 0" }}
               {...{ timeout: 1000 * i }}
             >
               <Card className={classes.card}>
-              <CardActionArea onClick={()=>history.push(`/post-detail/${post.slug}`)}>
+              <CardActionArea onClick={lookPost}>
                 <CardHeader
                   avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
@@ -156,7 +185,7 @@ export const CardItem = ({post, i}) =>{
                 </CardContent>
                 </CardActionArea>
                 <CardActions disableSpacing className={classes.buttons}>
-                  <IconButton aria-label="add to favorites">
+                  <IconButton aria-label="add to favorites" color={viewed ? "secondary" : "action"}>
                     <Badge badgeContent={post?.postview_count} color="secondary">
                       <VisibilityIcon />
                     </Badge>
