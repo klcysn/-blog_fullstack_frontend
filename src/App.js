@@ -12,6 +12,7 @@ export const AuthContext = createContext()
 function App() {
   const [Authorization, setAuthorization] = useState(localStorage.getItem("Authorization"))
   const [currentUser, setCurrentUser] = useState(localStorage.getItem("currentUser"))
+  const [force, setForce] = useState(false)
 
   useEffect(()=>{
     axios.get("https://blog-fullstack-backend.herokuapp.com/auth/user/",{
@@ -26,7 +27,7 @@ function App() {
   
   return (
     <div className="appContainer">
-      <AuthContext.Provider value={{Authorization, setAuthorization, currentUser, setCurrentUser}}>
+      <AuthContext.Provider value={{Authorization, setAuthorization, currentUser, setCurrentUser, force, setForce}}>
       <Router >
         <NavBar />
         <Switch>
