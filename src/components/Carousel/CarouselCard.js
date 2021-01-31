@@ -52,7 +52,7 @@ export function CarouselCard({checked, direction, post}) {
 
   const lookPost = () =>{
     if(!Authorization){
-      return history.push(`/post-detail/${post.slug}`)
+      history.push(`/post-detail/${post.slug}`)
   }
   if(!viewed){
     axios.post(`https://blog-fullstack-backend.herokuapp.com/post-view/${post.slug}/`,{

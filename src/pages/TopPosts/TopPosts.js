@@ -48,7 +48,7 @@ export const TopPosts = () =>{
 
       const lookPost = async (post) =>{
         if(!Authorization){
-            return history.push(`/post-detail/${post.slug}`)
+            history.push(`/post-detail/${post.slug}`)
         }
 
         let viewed = false
