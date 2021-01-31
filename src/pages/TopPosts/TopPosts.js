@@ -47,6 +47,10 @@ export const TopPosts = () =>{
       }, []);
 
       const lookPost = async (post) =>{
+        if(!Authorization){
+            return history.push(`/post-detail/${post.slug}`)
+        }
+
         let viewed = false
         await FetchData(`https://blog-fullstack-backend.herokuapp.com/post-view/${post?.slug}`)
         .then((data)=>{

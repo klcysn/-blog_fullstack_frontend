@@ -125,6 +125,9 @@ export const CardItem = ({post, i}) =>{
     }
 
     const lookPost = () =>{
+      if(!Authorization){
+        return history.push(`/post-detail/${post.slug}`)
+    }
       if(!viewed){
         axios.post(`https://blog-fullstack-backend.herokuapp.com/post-view/${post.slug}/`,{
           user: currentUser,

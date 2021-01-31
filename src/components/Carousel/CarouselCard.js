@@ -51,24 +51,27 @@ export function CarouselCard({checked, direction, post}) {
 },[post])
 
   const lookPost = () =>{
-    if(!viewed){
-      axios.post(`https://blog-fullstack-backend.herokuapp.com/post-view/${post.slug}/`,{
-        user: currentUser,
-        post: post.pk
-      },{
-        headers:{
-          "Authorization": `Token ${Authorization}`
-      }
-      })
-      .then(()=>history.push(`/post-detail/${post.slug}`))
-    }else{
-      history.push({
-        pathname: `/post-detail/${post.slug}`,
-        state:{liked: true}
-      })
+    if(!Authorization){
+      return history.push(`/post-detail/${post.slug}`)
   }
+  if(!viewed){
+    axios.post(`https://blog-fullstack-backend.herokuapp.com/post-view/${post.slug}/`,{
+      user: currentUser,
+      post: post.pk
+    },{
+      headers:{
+        "Authorization": `Token ${Authorization}`
+    }
+    })
+    .then(()=>history.push(`/post-detail/${post.slug}`))
+  }else{
+    history.push({
+      pathname: `/post-detail/${post.slug}`,
+      state:{liked: true}
+    })
+}
 
-  }
+}
 
   return (
     <Slide direction={direction} in={checked} mountOnEnter unmountOnExit>
