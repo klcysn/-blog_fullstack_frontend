@@ -83,7 +83,7 @@ export const PostDetail = (props) => {
     <Grid container xs={12} justify="center" className={classes.root}>
       <Grid item>
         <div className={classes.container}>
-          <img src={post?.media || "../../../blog-image.png"} className={classes.image} alt=""/>
+          <img src={post?.media || "../../blog-image.png"} className={classes.image} alt=""/>
           <div className={classes.titleContainer}>
             <div>
               <h1 className={classes.title}>{post?.title}</h1>

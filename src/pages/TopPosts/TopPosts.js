@@ -85,7 +85,7 @@ export const TopPosts = () =>{
         </GridListTile>
         {posts.map((tile) => (
           <GridListTile key={tile.media} cols={1.5} onClick={()=>lookPost(tile)} >
-            <img src={tile.media || "../../../blog-image.png"} alt={tile.title} />
+            <img src={tile.media || "../../blog-image.png"} alt={tile.title} />
             <GridListTileBar
               title={tile.title}
               subtitle={<span>by: {tile.username}</span>}
