@@ -1,16 +1,7 @@
 import { FetchData } from "../../helper/FetchData";
 import { useEffect, useState, useContext } from "react";
-import {useHistory} from "react-router-dom"
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./Comment.style";
-import Avatar from "@material-ui/core/Avatar";
-import moment from "moment";
-import Badge from "@material-ui/core/Badge";
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import MoodBadIcon from "@material-ui/icons/MoodBad";
-import Tooltip from "@material-ui/core/Tooltip";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';

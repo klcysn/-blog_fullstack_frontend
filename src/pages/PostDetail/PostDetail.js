@@ -18,29 +18,76 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import {PostForm} from "../../pages"
 import {AuthContext} from "../../App"
+import axios from "axios"
 
-export const PostDetail = () => {
-  const {currentUser} = useContext(AuthContext)
+export const PostDetail = (props) => {
+  const {currentUser, Authorization, force, setForce} = useContext(AuthContext)
   const { slug } = useParams();
   const [post, setPost] = useState([]);
   const classes = useStyles();
+  const [liked, setLiked] = useState(false)
+  // const [force, setForce] = useState(false)
   useEffect(() => {
     FetchData(
       `https://blog-fullstack-backend.herokuapp.com/post-detail/${slug}`
     )
-      .then((results) => setPost(results))
+      .then((results) => {
+        setPost(results)
+        isLiked(results)
+      })
       .catch((err) => console.log({ err }));
+  }, [force]);
 
-    
-  }, []);
-  // console.log({post});
+  const isLiked = (postDetail) =>{
+    FetchData(`https://blog-fullstack-backend.herokuapp.com/like/${postDetail.slug}`)
+      .then((data)=> {
+          data.map((item)=>{
+              if(item.user == currentUser && item.slug == postDetail.slug){
+                  setLiked(item.pk)
+              }
+          })
+      }).catch((err)=>console.log(err))
+  }
+
+  const handleLike = () =>{
+    if(liked){
+        axios.delete(`https://blog-fullstack-backend.herokuapp.com/like-detail/${post.slug}/${liked}/`,
+        {
+            headers:{
+                "Authorization": `Token ${Authorization}`
+            }
+        })
+        .then(()=>{
+          setLiked(false)
+          setForce(s=>!s)
+        })
+        .catch((err)=>console.log(err))
+        
+    }else{
+        axios.post(`https://blog-fullstack-backend.herokuapp.com/like/${post.slug}/`,{
+            user: currentUser,
+            post: post.pk
+        },{
+            headers:{
+                "Authorization": `Token ${Authorization}`
+            }
+        })
+        .then((msg)=>setForce(s=>!s))
+        .catch((err)=>console.log(err))
+        setLiked(true)
+        setForce(s=>!s)
+    }
+}
+
+  console.log({post});
+  console.log({liked})
   // console.log(post.user == currentUser);
   // console.log(post.slug, post.pk);
   return (
     <Grid container xs={12} justify="center" className={classes.root}>
       <Grid item>
         <div className={classes.container}>
-          <img src={post?.media || "/blog-image.png"} className={classes.image}/>
+          <img src={post?.media || "/blog-image.png"} className={classes.image} alt=""/>
           <div className={classes.titleContainer}>
             <div>
               <h1 className={classes.title}>{post?.title}</h1>
@@ -54,9 +101,9 @@ export const PostDetail = () => {
               </p>
             </div>
             <div className={classes.iconButtons}>
-              <IconButton aria-label="add to favorites">
+              <IconButton onClick={handleLike}>
                 <Badge badgeContent={post?.like_count} color="secondary">
-                  <FavoriteIcon color="primary" />
+                  <FavoriteIcon color={liked ? "secondary" : "action"} />
                 </Badge>
               </IconButton>
               <IconButton aria-label="add to favorites">

@@ -1,6 +1,5 @@
 import { FetchData } from "../../helper/FetchData";
 import { useEffect, useState, useContext } from "react";
-import {useHistory} from "react-router-dom"
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./Comment.style";
@@ -11,11 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoodBadIcon from "@material-ui/icons/MoodBad";
 import Tooltip from "@material-ui/core/Tooltip";
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Icon from '@material-ui/core/Icon';
-import Pagination from '@material-ui/lab/Pagination';
 import {AuthContext} from "../../App"
 import axios from "axios"
 import {DeleteAlert} from "../../helper/DeleteAlert"
@@ -23,7 +18,6 @@ import {DeleteAlert} from "../../helper/DeleteAlert"
 
 
 export const CommentItem = ({item, slug}) =>{
-    const history = useHistory()
     const classes = useStyles();
     const {Authorization, currentUser, setForce, force} = useContext(AuthContext)
     const [openAlert, setOpenAlert] = useState(false)

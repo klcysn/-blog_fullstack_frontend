@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import LockIcon from '@material-ui/icons/Lock';
 import {Link} from 'react-router-dom';
@@ -9,13 +9,12 @@ import Button from '@material-ui/core/Button';
 import {useStyles} from "./Login.style"
 import {useHistory} from "react-router-dom"
 import axios from "axios"
-import {AuthContext} from "../../App"
+
 
 
 export function Login() {
   const classes = useStyles();
   const history = useHistory()
-  const {Authorization, setAuthorization, setCurrentUser} = useContext(AuthContext)
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   
