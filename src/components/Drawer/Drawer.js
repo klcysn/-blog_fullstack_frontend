@@ -78,7 +78,7 @@ export function Drawer() {
             <ListItemIcon
             onClick={()=>{
               setSelectedCategory("")
-              history.push(index === 0 ? "/" : index === 1 ? "/" : "/post-send/")
+              history.push(index === 0 ? "/" : index === 1 ? "/top-posts/" : "/post-send/")
             }}
             >{index === 0 ? <HomeIcon key={index} /> : index === 1 ? <Looks5Icon key={index} /> : <MailIcon key={index} />}</ListItemIcon>
             <ListItemText
