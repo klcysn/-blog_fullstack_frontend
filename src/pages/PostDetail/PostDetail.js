@@ -12,6 +12,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -50,6 +51,9 @@ export const PostDetail = (props) => {
   }
 
   const handleLike = () =>{
+    if(!Authorization){
+      return null
+    }
     if(liked){
         axios.delete(`https://blog-fullstack-backend.herokuapp.com/like-detail/${post.slug}/${liked}/`,
         {
@@ -103,7 +107,7 @@ export const PostDetail = (props) => {
             <div className={classes.iconButtons}>
               <IconButton onClick={handleLike}>
                 <Badge badgeContent={post?.like_count} color="secondary">
-                  <FavoriteIcon color={liked ? "secondary" : "action"} />
+                  {liked ? <FavoriteIcon color="secondary" /> : <FavoriteBorderIcon color="primary" />}
                 </Badge>
               </IconButton>
               <IconButton aria-label="add to favorites">
