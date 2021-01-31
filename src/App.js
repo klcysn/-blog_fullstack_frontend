@@ -8,9 +8,9 @@ import axios from "axios"
 
 export const AuthContext = createContext()
 
-
+localStorage.setItem("Authorization", "")
 function App() {
-  const [Authorization, setAuthorization] = useState(localStorage.getItem("Authorization") ? localStorage.getItem("Authorization") : "")
+  const [Authorization, setAuthorization] = useState(localStorage.getItem("Authorization"))
   const [currentUser, setCurrentUser] = useState(localStorage.getItem("currentUser"))
   const [force, setForce] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState("")
