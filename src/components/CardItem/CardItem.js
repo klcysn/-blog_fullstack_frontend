@@ -21,7 +21,6 @@ import {useHistory} from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios"
 
-
 export const useStyles = makeStyles((theme) => ({
     container: {
       display: 'flex',
@@ -169,7 +168,7 @@ export const CardItem = ({post, i}) =>{
                 />
                 <CardMedia
                   className={classes.media}
-                  image={post.media || "../../blog-image.png"}
+                  image={post.media || "https://shiftdigital.co.za/wp-content/uploads/2014/11/Post-Background.jpg"}
                 />
                 <CardContent className={classes.content}>
                   <Typography

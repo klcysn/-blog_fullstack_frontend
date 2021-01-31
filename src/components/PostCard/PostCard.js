@@ -38,7 +38,7 @@ export const PostCard = () => {
           }else{return null}
         }else{
           return (
-            <CardItem  key={i}post = {post} i ={i} />
+            <CardItem  key={i} post = {post} i ={i} />
           );
         }
       })}
