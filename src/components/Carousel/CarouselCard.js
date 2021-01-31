@@ -79,7 +79,7 @@ export function CarouselCard({checked, direction, post}) {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image={post?.media || "/blog-image.png"}
+            image={post?.media || "../../../blog-image.png"}
             
           />
           <CardContent >
