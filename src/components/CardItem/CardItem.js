@@ -169,7 +169,7 @@ export const CardItem = ({post, i}) =>{
                 />
                 <CardMedia
                   className={classes.media}
-                  image={post.media || "../../../blog-image.png"}
+                  image={post.media || "../../blog-image.png"}
                 />
                 <CardContent className={classes.content}>
                   <Typography
