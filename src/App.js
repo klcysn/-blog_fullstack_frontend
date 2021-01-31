@@ -15,14 +15,16 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("")
 
   useEffect(()=>{
-    axios.get("https://blog-fullstack-backend.herokuapp.com/auth/user/",{
-        headers: {
-          'Authorization': `Token ${Authorization}`
-        } 
-        }).then(({data})=>{
-          setCurrentUser(data.pk)
-          localStorage.setItem("currentUser", data.pk)
-        })
+    if(Authorization){
+      axios.get("https://blog-fullstack-backend.herokuapp.com/auth/user/",{
+          headers: {
+            'Authorization': `Token ${Authorization}`
+          } 
+          }).then(({data})=>{
+            setCurrentUser(data.pk)
+            localStorage.setItem("currentUser", data.pk)
+          })
+    }
       },[Authorization])
   
   return (
