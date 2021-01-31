@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
-      // width: "99vw",
       padding:0,
       margin:0,
     },

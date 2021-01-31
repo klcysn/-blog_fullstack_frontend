@@ -13,7 +13,7 @@ export const MyCarousel = () =>{
   useEffect(() => {
     FetchData(
       "https://blog-fullstack-backend.herokuapp.com/post/?page=1"
-    ).then(({ results }) => setPosts(results)).catch((err)=>console.log({err}));
+    ).then(({ results }) => setPosts(results))
   }, []);
 
   const changeCarousel = () => {

@@ -14,7 +14,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export function DeleteAlert(props) {
   const [open, setOpen] = React.useState(false);
-  // setOpen(props.openAlert)
 
   React.useEffect(()=>{
     setOpen(props.openAlert)

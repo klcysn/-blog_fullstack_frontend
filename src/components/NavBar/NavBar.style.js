@@ -70,7 +70,7 @@ export const useStyles = makeStyles((theme) => ({
       alignItems: "center"
     },
     formControl: {
-        margin: theme.spacing(1),
+        margin: "0 0 1rem 2rem",
         minWidth: 120,
         [theme.breakpoints.down('xs')]: {
           display: 'none',

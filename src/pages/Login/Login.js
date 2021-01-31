@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 import {useStyles} from "./Login.style"
 import {useHistory} from "react-router-dom"
 import axios from "axios"
@@ -17,23 +18,27 @@ export function Login() {
   const history = useHistory()
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
+  const [err, setErr] = useState()
   
   const handleSubmit = async () =>{
     axios.post("https://blog-fullstack-backend.herokuapp.com/auth/login/",{ password, email})
     .then((response)=>{
       localStorage.setItem("Authorization", response.data.key)
+      history.push("/")
       document.location.reload()
-    }).catch((err)=>console.log({err}))
-    history.push("/")
+    }).catch(({response:{data}}) => setErr({data}))
   }
-
   return (
     <div className={classes.root}>
         <Link to="/" className={classes.closeIcon}>
             <CloseIcon />
         </Link>
         <LockIcon color="primary" className={classes.icon} />
-        <form className={classes.form} onSubmit={handleSubmit} autoComplete="off">
+        <form className={classes.form} autoComplete="off">
+        {err &&
+        <Alert className={classes.textField} variant="filled" severity="error">
+        Email or Password isn't correct.
+        </Alert>}
         <TextField
             id="outlined-secondary"
             label="Email"
@@ -57,7 +62,7 @@ export function Login() {
         color="primary"
         className={classes.button}
         endIcon={<Icon>send</Icon>}
-        type="submit"
+        onClick={handleSubmit}
         >
         Sign In
         </Button>

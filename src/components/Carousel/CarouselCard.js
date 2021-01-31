@@ -46,7 +46,7 @@ export function CarouselCard({checked, direction, post}) {
           setViewed(true)
         }
       })
-    }).catch((err)=>console.log(err))
+    })
 
 },[post])
 
@@ -64,7 +64,6 @@ export function CarouselCard({checked, direction, post}) {
     }
     })
     .then(()=>history.push(`/post-detail/${post.slug}`))
-    .catch((err)=>console.log(err))
   }else{
     history.push({
       pathname: `/post-detail/${post.slug}`,

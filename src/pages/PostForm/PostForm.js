@@ -24,7 +24,6 @@ export const PostForm = ({update}) =>{
     const [status, setStatus] = useState(!update ? "" : update.status)
     const [openAlert, setOpenAlert] = useState(false)
    
-    console.log({Authorization})
     useEffect(()=>{
         FetchData("https://blog-fullstack-backend.herokuapp.com/category-list/").then((data)=>setCategories(data))
       },[])
@@ -34,7 +33,6 @@ export const PostForm = ({update}) =>{
             history.push("/register")
         }
     },[])
-    console.log(update)
     const handleSubmit = () =>{
         axios.post("https://blog-fullstack-backend.herokuapp.com/post/",{
             user: currentUser,
@@ -47,7 +45,7 @@ export const PostForm = ({update}) =>{
         {
         headers: {
             'Authorization': `Token ${Authorization}`
-        }} ).then((message)=>console.log(message)).catch((err)=>console.log({err}))
+        }} )
         history.push("/")
     }
     const handleUpdate = () =>{
@@ -62,7 +60,7 @@ export const PostForm = ({update}) =>{
         {
         headers: {
             'Authorization': `Token ${Authorization}`
-        }} ).then((message)=>console.log(message)).catch((err)=>console.log({err}))
+        }} )
         history.push("/")
     }
     const handleDelete = (permission) =>{
@@ -71,7 +69,7 @@ export const PostForm = ({update}) =>{
             {
             headers: {
                 'Authorization': `Token ${Authorization}`
-            }} ).then((message)=>console.log(message)).catch((err)=>console.log({err}))
+            }} )
             history.push("/")
         }
         setOpenAlert(false)
@@ -91,7 +89,7 @@ export const PostForm = ({update}) =>{
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                        {categories?.map((item) => <MenuItem value={item.id}>{item.name}</MenuItem>)}
+                        {categories?.map((item, i) => <MenuItem key={i} value={item.id}>{item.name}</MenuItem>)}
                 </Select>
                 <TextField className={classes.inputs} rows={10} id="outlined-textarea" label="Message"
                 onChange={(e)=>setContent(e.target.value)} placeholder="Message" multiline variant="outlined" value={content} />

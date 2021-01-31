@@ -22,7 +22,7 @@ import {useHistory} from "react-router-dom"
 
 export function Drawer() {
   const history = useHistory()
-  const {Authorization} = useContext(AuthContext)
+  const {Authorization, setSelectedCategory} = useContext(AuthContext)
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -64,7 +64,7 @@ export function Drawer() {
           <ListItem button key={text}>
             <ListItemIcon
             onClick={()=>history.push(index === 0 ? "/register" : "/login")}
-            >{index % 2 === 0 ? <CreateIcon /> : <LockOpenIcon />}</ListItemIcon>
+            >{index % 2 === 0 ? <CreateIcon key={index} /> : <LockOpenIcon key={index} />}</ListItemIcon>
             <ListItemText primary={text}
             onClick={()=>history.push(index === 0 ? "/register" : "/login")}
             />
@@ -76,10 +76,16 @@ export function Drawer() {
         {['Home', 'Last 5 Posts', 'Send a Post'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon
-            onClick={()=>history.push(index === 0 ? "/" : index === 1 ? "/" : "/post-send/")}
-            >{index === 0 ? <HomeIcon /> : index === 1 ? <Looks5Icon /> : <MailIcon />}</ListItemIcon>
+            onClick={()=>{
+              setSelectedCategory("")
+              history.push(index === 0 ? "/" : index === 1 ? "/" : "/post-send/")
+            }}
+            >{index === 0 ? <HomeIcon key={index} /> : index === 1 ? <Looks5Icon key={index} /> : <MailIcon key={index} />}</ListItemIcon>
             <ListItemText
-            onClick={()=>history.push(index === 0 ? "/" : index === 1 ? "/top-posts/" : "/post-send/")}
+            onClick={()=>{
+              setSelectedCategory(false)
+              history.push(index === 0 ? "/" : index === 1 ? "/" : "/post-send/")
+            }}
             primary={text} />
           </ListItem>
         ))}
