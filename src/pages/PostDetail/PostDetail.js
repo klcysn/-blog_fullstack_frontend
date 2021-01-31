@@ -21,28 +21,33 @@ import {AuthContext} from "../../App"
 import axios from "axios"
 
 export const PostDetail = (props) => {
-  const {currentUser, Authorization} = useContext(AuthContext)
+  const {currentUser, Authorization, force, setForce} = useContext(AuthContext)
   const { slug } = useParams();
   const [post, setPost] = useState([]);
   const classes = useStyles();
   const [liked, setLiked] = useState(false)
-  const [force, setForce] = useState(false)
+  // const [force, setForce] = useState(false)
   useEffect(() => {
     FetchData(
       `https://blog-fullstack-backend.herokuapp.com/post-detail/${slug}`
     )
-      .then((results) => setPost(results))
+      .then((results) => {
+        setPost(results)
+        isLiked(results)
+      })
       .catch((err) => console.log({ err }));
+  }, [force]);
 
-      FetchData(`https://blog-fullstack-backend.herokuapp.com/like/${post.slug}`)
+  const isLiked = (postDetail) =>{
+    FetchData(`https://blog-fullstack-backend.herokuapp.com/like/${postDetail.slug}`)
       .then((data)=> {
           data.map((item)=>{
-              if(item.user == currentUser && item.slug == post.slug){
+              if(item.user == currentUser && item.slug == postDetail.slug){
                   setLiked(item.pk)
               }
           })
       }).catch((err)=>console.log(err))
-  }, [force]);
+  }
 
   const handleLike = () =>{
     if(liked){
@@ -82,7 +87,7 @@ export const PostDetail = (props) => {
     <Grid container xs={12} justify="center" className={classes.root}>
       <Grid item>
         <div className={classes.container}>
-          <img src={post?.media || "/blog-image.png"} className={classes.image}/>
+          <img src={post?.media || "/blog-image.png"} className={classes.image} alt=""/>
           <div className={classes.titleContainer}>
             <div>
               <h1 className={classes.title}>{post?.title}</h1>

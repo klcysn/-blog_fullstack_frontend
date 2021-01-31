@@ -3,7 +3,7 @@ import {createContext, useEffect, useState} from "react"
 import "./App.css"
 import {NavBar} from "./components/NavBar/NavBar"
 import {Footer} from "./components/Footer/Footer"
-import {Login, Register, Home, PostDetail, PostForm} from "./pages"
+import {Login, Register, Home, PostDetail, PostForm, TopPosts} from "./pages"
 import axios from "axios"
 
 export const AuthContext = createContext()
@@ -35,6 +35,7 @@ function App() {
           <Route path="/register" component={Register} exact/>
           <Route path="/post-detail/:slug" component={PostDetail} exact/>
           <Route path="/post-send/" component={PostForm} exact/>
+          <Route path="/top-posts/" component={TopPosts} exact/>
           <Route path="/" component={Home}/>
         </Switch>
         <Footer />

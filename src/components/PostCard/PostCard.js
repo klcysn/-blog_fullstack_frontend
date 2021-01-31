@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme) => ({
   }));
 
 export const PostCard = () => {
-  const {currentUser, Authorization, force, setForce} = useContext(AuthContext)
+  const {force} = useContext(AuthContext)
   const classes = useStyles();
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);

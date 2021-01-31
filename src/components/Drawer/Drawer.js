@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import clsx from 'clsx';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
@@ -7,14 +7,22 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {useStyles} from "./Drawer.style"
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import CreateIcon from '@material-ui/icons/Create';
+import HomeIcon from '@material-ui/icons/Home';
+import Looks5Icon from '@material-ui/icons/Looks5';
+import {AuthContext} from "../../App"
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import {useHistory} from "react-router-dom"
 
 
 export function Drawer() {
+  const history = useHistory()
+  const {Authorization} = useContext(AuthContext)
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -28,6 +36,13 @@ export function Drawer() {
     setState({ ...state, [anchor]: open });
   };
 
+  const handleLogout = async () =>{
+    localStorage.setItem("Authorization", "")
+    localStorage.setItem("currentUser", "")
+    document.location.reload()
+    history.push("/login")
+  }
+
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
@@ -38,19 +53,34 @@ export function Drawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {Authorization
+        ?
+        <ListItem button key={"Logout"}>
+          <ListItemIcon onClick={handleLogout}><ExitToAppIcon /></ListItemIcon>
+          <ListItemText onClick={handleLogout} primary={"Logout"} />
+        </ListItem>
+        :  
+        ['Sign Up', 'Login'].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemIcon
+            onClick={()=>history.push(index === 0 ? "/register" : "/login")}
+            >{index % 2 === 0 ? <CreateIcon /> : <LockOpenIcon />}</ListItemIcon>
+            <ListItemText primary={text}
+            onClick={()=>history.push(index === 0 ? "/register" : "/login")}
+            />
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {['Home', 'Last 5 Posts', 'Send a Post'].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemIcon
+            onClick={()=>history.push(index === 0 ? "/" : index === 1 ? "/" : "/post-send/")}
+            >{index === 0 ? <HomeIcon /> : index === 1 ? <Looks5Icon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText
+            onClick={()=>history.push(index === 0 ? "/" : index === 1 ? "/top-posts/" : "/post-send/")}
+            primary={text} />
           </ListItem>
         ))}
       </List>
