@@ -126,7 +126,7 @@ export const CardItem = ({post, i}) =>{
 
     const lookPost = () =>{
       if(!Authorization){
-        history.push(`/post-detail/${post.slug}`)
+        return history.push(`/post-detail/${post.slug}`)
     }
       if(!viewed){
         axios.post(`https://blog-fullstack-backend.herokuapp.com/post-view/${post.slug}/`,{
