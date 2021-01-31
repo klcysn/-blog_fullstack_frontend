@@ -24,7 +24,7 @@ import {AuthContext} from "../../App"
 export function NavBar() {
   const classes = useStyles();
   const history = useHistory()
-  const {Authorization} = useContext(AuthContext)
+  const {Authorization, setSelectedCategory} = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [category, setCategory] = useState([])
@@ -35,10 +35,6 @@ export function NavBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -56,8 +52,8 @@ export function NavBar() {
   const handleLogout = async () =>{
     localStorage.setItem("Authorization", "")
     localStorage.setItem("currentUser", "")
-    document.location.reload()
     history.push("/login")
+    document.location.reload()
   }
 
   const menuId = 'primary-search-account-menu';
@@ -104,21 +100,6 @@ export function NavBar() {
           <p>Login</p>
         </MenuItem>
       </Link>}
-      {Authorization
-      ?
-        <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-      :
-      null}
       <Link to={Authorization ? "/post-send" : "/register"} className={classes.lockIconMobil}>
         <MenuItem>
           <IconButton aria-label="show 4 new mails" color="inherit">
@@ -140,26 +121,13 @@ export function NavBar() {
               Blog
             </Typography>
           </Link>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="grouped-select" className={classes.select}>Categories</InputLabel>
-              <Select defaultValue="" id="grouped-select">
-                <MenuItem value="">
+              <Select defaultValue="" id="grouped-select" onChange={(e)=>setSelectedCategory(e.target.value)}>
+                <MenuItem value={false}>
                   <em>None</em>
                 </MenuItem>
-                {category?.map((item) => <MenuItem value={item.name}>{item.name}</MenuItem>)}
+                {category?.map((item) => <MenuItem value={item.id}>{item.name}</MenuItem>)}
               </Select>
             </FormControl>
           <div className={classes.grow} />
@@ -182,22 +150,6 @@ export function NavBar() {
                 <LockIcon />
               </IconButton>
             </Link>
-            }
-
-           {Authorization
-           ?
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-            :
-            null
             }
           </div>
           <div className={classes.sectionMobile}>

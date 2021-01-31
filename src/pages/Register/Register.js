@@ -12,6 +12,7 @@ import axios from "axios"
 import { useState } from 'react';
 
 
+
 export function Register() {
   const classes = useStyles();
   const history = useHistory()
@@ -19,19 +20,20 @@ export function Register() {
   const [password, setPassword] = useState("")
   const [password2, setPassword2] = useState("")
   const [email, setEmail] = useState("")
+  const [err, setErr] = useState()
   
   const handleSubmit = () =>{
     axios.post("https://blog-fullstack-backend.herokuapp.com/user/register/",{username, password, password2, email})
-    history.push("/login")
+    .then(()=>history.push("/login"))
+    .catch(({response:{data}}) => setErr({data}))
   }
-
   return (
     <div className={classes.root}>
         <Link to="/" className={classes.closeIcon}>
             <CloseIcon />
         </Link>
         <LockIcon color="primary" className={classes.icon} />
-        <form onSubmit={handleSubmit} className={classes.form} autoComplete="off">
+        <form className={classes.form} autoComplete="off">
         <TextField
             id="outlined-secondary"
             name="username"
@@ -42,6 +44,7 @@ export function Register() {
             type="text"
             onChange={(e)=>setUsername(e.target.value)}
         />
+        {err?.data.username && <p className={classes.error}>{err?.data.username}</p>}
         <TextField
             id="outlined-secondary"
             label="Email"
@@ -52,6 +55,11 @@ export function Register() {
             type="email"
             onChange={(e)=>setEmail(e.target.value)}
         />
+        {err?.data.email && (err?.data.email == "This field must be unique." 
+        ?
+        <p className={classes.error}>A user with that email address already exists.</p>
+        :
+        <p className={classes.error}>{err?.data.email}</p>)}
         <TextField
             id="outlined-secondary"
             label="Password"
@@ -62,6 +70,7 @@ export function Register() {
             type="password"
             onChange={(e)=>setPassword(e.target.value)}
         />
+        {err?.data.password && <p className={classes.error}>{err?.data.password}</p>}
         <TextField
             id="outlined-secondary"
             label="Confirm Password"
@@ -72,12 +81,13 @@ export function Register() {
             type="password"
             onChange={(e)=>setPassword2(e.target.value)}
         />
+        {err?.data.password2 && <p className={classes.error}>{err?.data.password2}</p>}
         <Button
         variant="contained"
         color="primary"
         className={classes.button}
         endIcon={<Icon>lock_open</Icon>}
-        type="submit"
+        onClick={handleSubmit}
         >Register</Button>
         <Typography className={classes.link}>
         Already have an account? <Link to="/login">Log In</Link>

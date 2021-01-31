@@ -6,6 +6,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core/styles';
 import {CardItem} from "../../components/CardItem/CardItem"
 import {AuthContext} from "../../App"
+import { Category } from "@material-ui/icons";
 
 export const useStyles = makeStyles((theme) => ({
       pagination:{
@@ -16,10 +17,11 @@ export const useStyles = makeStyles((theme) => ({
   }));
 
 export const PostCard = () => {
-  const {force} = useContext(AuthContext)
+  const {force, selectedCategory} = useContext(AuthContext)
   const classes = useStyles();
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
+
 
   useEffect(() => {
     FetchData(`https://blog-fullstack-backend.herokuapp.com/post/?page=${page}`)
@@ -29,9 +31,17 @@ export const PostCard = () => {
   return (
     <Grid container spacing={0} justify="center">
       {posts?.results?.map((post, i) => {
-        return (
-          <CardItem post = {post} i ={i} />
-        );
+        if(selectedCategory){
+          if(selectedCategory == post.category){
+            return(
+              <CardItem post = {post} i ={i} />
+            )
+          }else{return null}
+        }else{
+          return (
+            <CardItem post = {post} i ={i} />
+          );
+        }
       })}
       <Grid item xs={12} className={classes.pagination} justify="center">
         <Pagination count={Math.ceil(posts?.count/5)} variant="outlined" onChange={(event, value)=>setPage(value)} size="large" color="secondary" />
@@ -39,6 +49,3 @@ export const PostCard = () => {
     </Grid>
   );
 };
-
-
-// e.target.innerText

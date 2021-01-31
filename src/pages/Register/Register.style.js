@@ -47,5 +47,12 @@ export const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
           alignSelf: "flex-end"
         },
+    },
+    error:{
+      padding:0,
+      margin: "-1rem 0 -0.7rem 0",
+      color: "red",
+      fontSize: "0.9rem",
+      alignSelf: "flex-start"
     }
   }));

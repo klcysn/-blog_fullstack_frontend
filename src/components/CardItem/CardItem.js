@@ -70,7 +70,7 @@ export const useStyles = makeStyles((theme) => ({
 
 
 export const CardItem = ({post, i}) =>{
-    const {currentUser, Authorization, force, setForce} = useContext(AuthContext)
+    const {currentUser, Authorization, force, setForce, selectedCategory} = useContext(AuthContext)
     const history = useHistory()
     const classes = useStyles();
     const [liked, setLiked] = useState(false)
