@@ -13,7 +13,7 @@ function App() {
   const [Authorization, setAuthorization] = useState(localStorage.getItem("Authorization"))
   const [currentUser, setCurrentUser] = useState(localStorage.getItem("currentUser"))
   const [force, setForce] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState("")
 
   useEffect(()=>{
     axios.get("https://blog-fullstack-backend.herokuapp.com/auth/user/",{
@@ -23,7 +23,7 @@ function App() {
         }).then(({data})=>{
           setCurrentUser(data.pk)
           localStorage.setItem("currentUser", data.pk)
-        }).catch((err)=>console.log({err}))
+        })
       },[Authorization])
   
   return (

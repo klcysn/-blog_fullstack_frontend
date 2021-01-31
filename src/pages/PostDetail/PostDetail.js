@@ -27,7 +27,6 @@ export const PostDetail = (props) => {
   const [post, setPost] = useState([]);
   const classes = useStyles();
   const [liked, setLiked] = useState(false)
-  // const [force, setForce] = useState(false)
   useEffect(() => {
     FetchData(
       `https://blog-fullstack-backend.herokuapp.com/post-detail/${slug}`
@@ -36,7 +35,6 @@ export const PostDetail = (props) => {
         setPost(results)
         isLiked(results)
       })
-      .catch((err) => console.log({ err }));
   }, [force]);
 
   const isLiked = (postDetail) =>{
@@ -47,7 +45,7 @@ export const PostDetail = (props) => {
                   setLiked(item.pk)
               }
           })
-      }).catch((err)=>console.log(err))
+      })
   }
 
   const handleLike = () =>{
@@ -65,7 +63,6 @@ export const PostDetail = (props) => {
           setLiked(false)
           setForce(s=>!s)
         })
-        .catch((err)=>console.log(err))
         
     }else{
         axios.post(`https://blog-fullstack-backend.herokuapp.com/like/${post.slug}/`,{
@@ -77,16 +74,11 @@ export const PostDetail = (props) => {
             }
         })
         .then((msg)=>setForce(s=>!s))
-        .catch((err)=>console.log(err))
         setLiked(true)
         setForce(s=>!s)
     }
 }
 
-  console.log({post});
-  console.log({liked})
-  // console.log(post.user == currentUser);
-  // console.log(post.slug, post.pk);
   return (
     <Grid container xs={12} justify="center" className={classes.root}>
       <Grid item>
@@ -110,7 +102,7 @@ export const PostDetail = (props) => {
                   {liked ? <FavoriteIcon color="secondary" /> : <FavoriteBorderIcon color="primary" />}
                 </Badge>
               </IconButton>
-              <IconButton aria-label="add to favorites">
+              <IconButton>
                 <Tooltip title="Report as Bad Post" arrow>
                   <MoodBadIcon color="primary" />
                 </Tooltip>

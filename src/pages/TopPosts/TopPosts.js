@@ -43,7 +43,7 @@ export const TopPosts = () =>{
     useEffect(() => {
         FetchData(
           "https://blog-fullstack-backend.herokuapp.com/post/?page=1"
-        ).then(({ results }) => setPosts(results)).catch((err)=>console.log({err}));
+        ).then(({ results }) => setPosts(results))
       }, []);
 
       const lookPost = async (post) =>{
@@ -54,13 +54,12 @@ export const TopPosts = () =>{
         let viewed = false
         await FetchData(`https://blog-fullstack-backend.herokuapp.com/post-view/${post?.slug}`)
         .then((data)=>{
-            console.log({data})
           data.map((view)=>{
             if(view.user == currentUser){
               viewed = true
             }
           })
-        }).catch((err)=>console.log({err}))
+        })
 
         if(!viewed){
           axios.post(`https://blog-fullstack-backend.herokuapp.com/post-view/${post.slug}/`,{
@@ -72,7 +71,6 @@ export const TopPosts = () =>{
           }
           })
           .then(()=>history.push(`/post-detail/${post.slug}`))
-          .catch((err)=>console.log({err}))
         }else{
           history.push(`/post-detail/${post.slug}`)
       }

@@ -20,10 +20,7 @@ export const Comment = ({ slug, postId }) => {
   useEffect(() => {
     FetchData(`https://blog-fullstack-backend.herokuapp.com/comment/${slug}/?page=${page}`)
       .then(( results ) => setComment(results))
-      .catch((err) => console.log({ err }));
   }, [page, force, slug]);
-
-console.log({slug}, {postId})
 
   const handleSubmit = () =>{
     axios.post(`https://blog-fullstack-backend.herokuapp.com/comment/${slug}/`,{
@@ -36,12 +33,10 @@ console.log({slug}, {postId})
       headers:{
         "Authorization": `Token ${Authorization}`
       }
-    }).then(()=>setForce(s=>!s)).catch((err)=>console.log({err}))
+    }).then(()=>setForce(s=>!s))
     setText("")
   }
 
-
-  console.log(comment)
   return (
     <div className={classes.root}>
         {Authorization
@@ -61,8 +56,8 @@ console.log({slug}, {postId})
         </div>
       ) : null}
       <Grid container justify="center" spacing={3}>
-        {comment.results?.map((item) => {
-          return <CommentItem item={item} slug={slug} />
+        {comment.results?.map((item, i) => {
+          return <CommentItem key={i} item={item} slug={slug} />
         })}
         <Grid item xs={12} className={classes.pagination} justify="center">
             <Pagination count={Math.ceil(comment?.count/5)} variant="outlined" onChange={(event, value)=>setPage(value)} size="large" color="secondary" />

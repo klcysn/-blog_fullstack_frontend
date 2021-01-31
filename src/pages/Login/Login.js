@@ -28,8 +28,6 @@ export function Login() {
       document.location.reload()
     }).catch(({response:{data}}) => setErr({data}))
   }
-
-  console.log({err})
   return (
     <div className={classes.root}>
         <Link to="/" className={classes.closeIcon}>

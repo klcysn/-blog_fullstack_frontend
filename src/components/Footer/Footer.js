@@ -8,7 +8,6 @@ import Link from '@material-ui/core/Link';
 const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: "#EEEEEE",
-    // marginTop: theme.spacing(8),
     padding: theme.spacing(3, 0),
 
   },

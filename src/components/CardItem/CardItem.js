@@ -29,7 +29,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     media: {
         height: 0,
-        paddingTop: '35%', // 16:9,
+        paddingTop: '35%',
         
       },
       card: {
@@ -70,7 +70,7 @@ export const useStyles = makeStyles((theme) => ({
 
 
 export const CardItem = ({post, i}) =>{
-    const {currentUser, Authorization, force, setForce, selectedCategory} = useContext(AuthContext)
+    const {currentUser, Authorization, force, setForce} = useContext(AuthContext)
     const history = useHistory()
     const classes = useStyles();
     const [liked, setLiked] = useState(false)
@@ -85,7 +85,7 @@ export const CardItem = ({post, i}) =>{
                     setLiked(item.pk)
                 }
             })
-        }).catch((err)=>console.log(err))
+        })
 
         FetchData(`https://blog-fullstack-backend.herokuapp.com/post-view/${post.slug}`)
         .then((data)=>{
@@ -94,7 +94,7 @@ export const CardItem = ({post, i}) =>{
               setViewed(true)
             }
           })
-        }).catch((err)=>console.log(err))
+        })
 
     },[force, post])
 
@@ -110,7 +110,6 @@ export const CardItem = ({post, i}) =>{
               setLiked(false)
               setForce(s=>!s)
             })
-            .catch((err)=>console.log(err))
             
         }else{
             axios.post(`https://blog-fullstack-backend.herokuapp.com/like/${post.slug}/`,{
@@ -122,7 +121,6 @@ export const CardItem = ({post, i}) =>{
                 }
             })
             .then((msg)=>setForce(s=>!s))
-            .catch((err)=>console.log(err))
         }
     }
 
@@ -140,7 +138,6 @@ export const CardItem = ({post, i}) =>{
         }
         })
         .then(()=>history.push(`/post-detail/${post.slug}`))
-        .catch((err)=>console.log(err))
       }else{
         history.push({
           pathname: `/post-detail/${post.slug}`,
@@ -161,7 +158,7 @@ export const CardItem = ({post, i}) =>{
               <CardActionArea onClick={lookPost}>
                 <CardHeader
                   avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
+                    <Avatar className={classes.avatar}>
                       {post?.username[0].toUpperCase()}
                     </Avatar>
                   }
@@ -172,7 +169,6 @@ export const CardItem = ({post, i}) =>{
                 <CardMedia
                   className={classes.media}
                   image={post.media || "/blog-image.png"}
-                  title="Paella dish"
                 />
                 <CardContent className={classes.content}>
                   <Typography
@@ -190,7 +186,7 @@ export const CardItem = ({post, i}) =>{
                 </CardContent>
                 </CardActionArea>
                 <CardActions disableSpacing className={classes.buttons}>
-                  <IconButton aria-label="add to favorites" color={viewed ? "secondary" : "action"}>
+                  <IconButton color={viewed ? "secondary" : "action"}>
                     <Badge badgeContent={post?.postview_count} color="secondary">
                       <VisibilityIcon />
                     </Badge>
@@ -200,7 +196,7 @@ export const CardItem = ({post, i}) =>{
                       <FavoriteIcon color={liked ? "secondary" : "action"}  />
                     </Badge>
                   </IconButton>
-                  <IconButton aria-label="share">
+                  <IconButton>
                     <Badge badgeContent={post?.comment_count} color="secondary">
                       <ModeCommentIcon />
                     </Badge>

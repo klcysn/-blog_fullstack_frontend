@@ -9,8 +9,7 @@ import {AuthContext} from "../../App"
 
 export const Home = () =>{
     const classes = useStyles();
-    const {selectedCategory} = useContext(AuthContext)
-    console.log(selectedCategory)
+    const {selectedCategory} = useContext(AuthContext)  
     return (
       <div className={classes.root}>
         <Grid container xs={12} spacing={0}>

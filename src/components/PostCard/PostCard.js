@@ -6,7 +6,6 @@ import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core/styles';
 import {CardItem} from "../../components/CardItem/CardItem"
 import {AuthContext} from "../../App"
-import { Category } from "@material-ui/icons";
 
 export const useStyles = makeStyles((theme) => ({
       pagination:{
@@ -34,12 +33,12 @@ export const PostCard = () => {
         if(selectedCategory){
           if(selectedCategory == post.category){
             return(
-              <CardItem post = {post} i ={i} />
+              <CardItem key={i} post = {post} i ={i} />
             )
           }else{return null}
         }else{
           return (
-            <CardItem post = {post} i ={i} />
+            <CardItem  key={i}post = {post} i ={i} />
           );
         }
       })}

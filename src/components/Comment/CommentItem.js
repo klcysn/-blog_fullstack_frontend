@@ -36,7 +36,6 @@ export const CommentItem = ({item, slug}) =>{
             })
             setLikes(data)
         })
-        .catch((err)=>console.log({err}))
     },[force])
 
     const handleDelete = (permission) =>{
@@ -47,7 +46,7 @@ export const CommentItem = ({item, slug}) =>{
             headers:{
               "Authorization": `Token ${Authorization}`
             }
-          }).then(()=>setForce(s=>!s)).catch((err)=>console.log({err}))
+          }).then(()=>setForce(s=>!s))
           
         }
         setOpenAlert(false)
@@ -64,9 +63,7 @@ export const CommentItem = ({item, slug}) =>{
             .then(()=>{
               setLiked(false)
               setForce(s=>!s)
-            })
-            .catch((err)=>console.log(err))
-            
+            })            
         }else{
             axios.post(`https://blog-fullstack-backend.herokuapp.com/comment-like/${slug}/${item.pk}/`,{
                 user: currentUser,
@@ -77,19 +74,15 @@ export const CommentItem = ({item, slug}) =>{
                 }
             })
             .then((msg)=>setForce(s=>!s))
-            .catch((err)=>console.log(err))
         }
     }
-
-    // console.log({item})
-    console.log({likes})
 
     return(
         <Grid item className={classes.paperContainer} xs={12}>
               <DeleteAlert openAlert={openAlert} permission={(permission)=>handleDelete(permission)}/>
               <Paper className={classes.paper}>
                 <div className={classes.avatarContainer}>
-                  <Avatar aria-label="recipe" className={classes.avatar}>
+                  <Avatar className={classes.avatar}>
                     {item?.username[0].toUpperCase()}
                   </Avatar>
                   <p>{item?.username}</p>
@@ -116,7 +109,7 @@ export const CommentItem = ({item, slug}) =>{
                         <FavoriteIcon color={liked ? "secondary" : "action"}/>
                       </Badge>
                     </IconButton>
-                    <IconButton aria-label="add to favorites">
+                    <IconButton>
                       <Tooltip title="Report as Bad Comment" arrow>
                         <MoodBadIcon />
                       </Tooltip>

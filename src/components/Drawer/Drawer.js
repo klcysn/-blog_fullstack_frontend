@@ -64,7 +64,7 @@ export function Drawer() {
           <ListItem button key={text}>
             <ListItemIcon
             onClick={()=>history.push(index === 0 ? "/register" : "/login")}
-            >{index % 2 === 0 ? <CreateIcon /> : <LockOpenIcon />}</ListItemIcon>
+            >{index % 2 === 0 ? <CreateIcon key={index} /> : <LockOpenIcon key={index} />}</ListItemIcon>
             <ListItemText primary={text}
             onClick={()=>history.push(index === 0 ? "/register" : "/login")}
             />
@@ -77,10 +77,10 @@ export function Drawer() {
           <ListItem button key={text}>
             <ListItemIcon
             onClick={()=>{
-              setSelectedCategory(false)
+              setSelectedCategory("")
               history.push(index === 0 ? "/" : index === 1 ? "/" : "/post-send/")
             }}
-            >{index === 0 ? <HomeIcon /> : index === 1 ? <Looks5Icon /> : <MailIcon />}</ListItemIcon>
+            >{index === 0 ? <HomeIcon key={index} /> : index === 1 ? <Looks5Icon key={index} /> : <MailIcon key={index} />}</ListItemIcon>
             <ListItemText
             onClick={()=>{
               setSelectedCategory(false)
