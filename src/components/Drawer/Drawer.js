@@ -84,7 +84,7 @@ export function Drawer() {
             <ListItemText
             onClick={()=>{
               setSelectedCategory(false)
-              history.push(index === 0 ? "/" : index === 1 ? "/" : "/post-send/")
+              history.push(index === 0 ? "/" : index === 1 ? "/top-posts/" : "/post-send/")
             }}
             primary={text} />
           </ListItem>
