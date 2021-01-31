@@ -60,6 +60,7 @@ export const TopPosts = () =>{
             }
           })
         })
+        
 
         if(!viewed){
           axios.post(`https://blog-fullstack-backend.herokuapp.com/post-view/${post.slug}/`,{
