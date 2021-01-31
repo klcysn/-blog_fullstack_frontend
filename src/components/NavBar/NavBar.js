@@ -24,7 +24,7 @@ import {AuthContext} from "../../App"
 export function NavBar() {
   const classes = useStyles();
   const history = useHistory()
-  const {Authorization, setSelectedCategory} = useContext(AuthContext)
+  const {Authorization, setSelectedCategory, selectedCategory} = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [category, setCategory] = useState([])
@@ -116,14 +116,14 @@ export function NavBar() {
       <AppBar position="static">
         <Toolbar>
           <Drawer />
-          <Link to="/" className={classes.title}>
+          <Link to="/" onClick={()=>setSelectedCategory(false)} className={classes.title}>
             <Typography  variant="h6" noWrap>
               Blog
             </Typography>
           </Link>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="grouped-select" className={classes.select}>Categories</InputLabel>
-              <Select defaultValue="" id="grouped-select" onChange={(e)=>setSelectedCategory(e.target.value)}>
+              <Select defaultValue="" value={selectedCategory} id="grouped-select" onChange={(e)=>setSelectedCategory(e.target.value)}>
                 <MenuItem value={false}>
                   <em>None</em>
                 </MenuItem>
